@@ -1,0 +1,8 @@
+.hover-color {
+    transition: .2s ease-in-out;
+}
+
+.hover-color:hover {
+    background-color: rgb(230, 230, 230) !important;
+    transition: .2s ease-in-out;
+}
