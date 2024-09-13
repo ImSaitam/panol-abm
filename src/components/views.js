@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Tab, Nav, Form, Button, Table } from 'react-bootstrap';
+import { Container, Row, Col, Tab, Nav, Form, Button, Card } from 'react-bootstrap';
 import '../views.css';
 
 export default function Vista() {
-  // Definimos los estados para almacenar la selección actual de categoría y subcategoría
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
   const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] = useState('');
+  const [tipoSeleccionado, setTipoSeleccionado] = useState('');
 
   return (
     <Container className="container-vista">
@@ -31,14 +31,14 @@ export default function Vista() {
           {/* Tab for "Herramientas" */}
           <Tab.Pane eventKey="tools">
             <Row className="mb-3">
-              {/* Dropdown para Categoría */}
               <Col md={3}>
                 <Form.Select
                   aria-label="Categoría"
                   value={categoriaSeleccionada}
                   onChange={(e) => {
                     setCategoriaSeleccionada(e.target.value);
-                    setSubcategoriaSeleccionada(''); // Reseteamos subcategoría cuando se cambia la categoría
+                    setSubcategoriaSeleccionada('');
+                    setTipoSeleccionado('');
                   }}
                 >
                   <option value="">Categoría</option>
@@ -47,13 +47,15 @@ export default function Vista() {
                 </Form.Select>
               </Col>
 
-              {/* Dropdown para Subcategoría, se habilita solo si hay una categoría seleccionada */}
               <Col md={3}>
                 <Form.Select
                   aria-label="Subcategoría"
                   value={subcategoriaSeleccionada}
-                  onChange={(e) => setSubcategoriaSeleccionada(e.target.value)}
-                  disabled={!categoriaSeleccionada} // Se deshabilita si no se ha seleccionado una categoría
+                  onChange={(e) => {
+                    setSubcategoriaSeleccionada(e.target.value);
+                    setTipoSeleccionado('');
+                  }}
+                  disabled={!categoriaSeleccionada}
                 >
                   <option value="">Subcategoría</option>
                   <option value="1">Subcategoría 1</option>
@@ -61,11 +63,12 @@ export default function Vista() {
                 </Form.Select>
               </Col>
 
-              {/* Dropdown para Tipo, se habilita solo si hay una subcategoría seleccionada */}
               <Col md={3}>
                 <Form.Select
                   aria-label="Tipo"
-                  disabled={!subcategoriaSeleccionada} // Se deshabilita si no se ha seleccionado una subcategoría
+                  value={tipoSeleccionado}
+                  onChange={(e) => setTipoSeleccionado(e.target.value)}
+                  disabled={!subcategoriaSeleccionada}
                 >
                   <option value="">Tipo</option>
                   <option value="1">Tipo 1</option>
@@ -78,24 +81,13 @@ export default function Vista() {
               </Col>
             </Row>
 
-            {/* Table for displaying tools */}
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Nombre de herramienta</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Ejemplo de herramienta</td>
-                  <td>
-                    <Button variant="secondary">Ver</Button>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-
+            {/* Reemplazo de tabla por card con botón a la derecha */}
+            <Card className="mb-3">
+              <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
+                <span>Ejemplo de herramienta</span>
+                <Button variant="secondary">Ver</Button>
+              </Card.Header>
+            </Card>
           </Tab.Pane>
 
           {/* Tab for "Consumibles" */}
@@ -127,23 +119,13 @@ export default function Vista() {
               </Col>
             </Row>
 
-            {/* Table for displaying consumables */}
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Nombre de consumible</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Ejemplo de consumible</td>
-                  <td>
-                    <Button variant="secondary">Ver</Button>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
+            {/* Reemplazo de tabla por card con botón a la derecha */}
+            <Card className="mb-3">
+              <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
+                <span>Ejemplo de consumible</span>
+                <Button variant="secondary">Ver</Button>
+              </Card.Header>
+            </Card>
           </Tab.Pane>
         </Tab.Content>
       </Tab.Container>

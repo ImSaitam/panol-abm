@@ -20,8 +20,8 @@
 }
 
 .nav-tabs .nav-link.active {
-    background-color: #007bff; /* Color de la pestaña activa */
-    color: white;
+    background-color: #ffffff; /* Color de la pestaña activa */
+    color: rgb(0, 0, 0);
 }
 
 .table {
@@ -46,4 +46,8 @@ button {
         width: 100%;
         margin-bottom: 15px;
     }
+}
+.card {
+    margin-top: 20px;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
