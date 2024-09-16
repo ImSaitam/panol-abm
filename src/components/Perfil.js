@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-export default function Component() {
+export default function Perfil() {
   const [showModal, setShowModal] = useState(false)
 
   const handleClose = () => setShowModal(false)
   const handleShow = () => setShowModal(true)
 
   const handleDeactivate = () => {
-    // Add your deactivation logic here
-    console.log('Tool deactivated')
+    alert('Herramienta dada de baja.')
     handleClose()
   }
 
@@ -24,19 +24,19 @@ export default function Component() {
           </Card>
         </Col>
         <Col md={6}>
-          <Card>
+          <Card style={{ height: '80.5vh'}}>
             <Card.Body>
               <h2 className="mb-4">Nombre #(N°de id)</h2>
               <p><strong>Categoría:</strong> [Categoría de la herramienta]</p>
               <p><strong>Subcategoría:</strong> [Subcategoría de la herramienta]</p>
               <p><strong>Tipo:</strong> [Tipo de herramienta]</p>
               <p><strong>Observaciones:</strong> Observaciones de cada herramienta (detalles, fallas, arreglos, )</p>
-              <div className="mt-4">
-                <Button variant="primary" className="me-2">Modificar</Button>
-                <Button variant="danger" onClick={handleShow}>Dar de baja</Button>
-              </div>
             </Card.Body>
           </Card>
+          <div className='d-flex justify-content-end'>
+            <Link to="/modificar"><Button variant="primary" className="me-2">Modificar</Button></Link>
+            <Button variant="danger" onClick={handleShow}>Dar de baja</Button>
+          </div>
         </Col>
       </Row>
 
