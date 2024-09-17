@@ -28,7 +28,7 @@ function SidebarMenu() {
                   <Link to="" className="text-decoration-none"><ListGroup.Item className="hover-color">Crear tipo de herramienta</ListGroup.Item></Link>
                   <hr />
                   <Link to="" className="text-decoration-none"><ListGroup.Item className="hover-color">Alta de herramientas</ListGroup.Item></Link>
-                  <Link to="/ver" className="text-decoration-none"><ListGroup.Item className="hover-color">Ver herramientas</ListGroup.Item></Link>
+                  <Link to="" className="text-decoration-none"><ListGroup.Item className="hover-color">Ver herramientas</ListGroup.Item></Link>
                   <hr />
                   <Link to="" className="text-decoration-none"><ListGroup.Item className="hover-color">Alta de consumibles</ListGroup.Item></Link>
                   <Link to="" className="text-decoration-none"><ListGroup.Item className="hover-color">Modificar consumibles</ListGroup.Item></Link>
