@@ -1,9 +1,13 @@
 import React from 'react';
 import { Container, Row, Col, Tab, Nav, Form, Button, Card } from 'react-bootstrap';
+import AñadirCategoriaBoton from './AñadirCategoriaBoton';
+import AñadirSubCategoriaBoton from './AñadirSubcategoriaBoton';
+import AñadirTipoBoton from './AñadirTipoBoton';
 
 export default function Categorias() {
 
   return (
+    <>
     <Container className="container-vista">
       <Tab.Container defaultActiveKey="tools">
         <Row>
@@ -48,6 +52,7 @@ export default function Categorias() {
                 <Button variant="secondary">Ver</Button>
               </Card.Header>
             </Card>
+            <AñadirCategoriaBoton />
           </Tab.Pane>
 
           <Tab.Pane eventKey="subcategory">
@@ -67,6 +72,7 @@ export default function Categorias() {
                 <Button variant="secondary">Ver</Button>
               </Card.Header>
             </Card>
+            <AñadirSubCategoriaBoton />
           </Tab.Pane>
 
           {/* Tab for "Consumibles" */}
@@ -87,9 +93,11 @@ export default function Categorias() {
                 <Button variant="secondary">Ver</Button>
               </Card.Header>
             </Card>
+            <AñadirTipoBoton />
           </Tab.Pane>
         </Tab.Content>
       </Tab.Container>
     </Container>
+    </>
   );
 }
