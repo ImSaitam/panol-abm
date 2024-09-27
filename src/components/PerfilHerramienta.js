@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default function Perfil() {
+export default function PerfilHerramienta() {
   const [showModal, setShowModal] = useState(false)
 
   const handleClose = () => setShowModal(false)
@@ -34,7 +34,7 @@ export default function Perfil() {
             </Card.Body>
           </Card>
           <div className='d-flex justify-content-end'>
-            <Link to="/modificar"><Button variant="primary" className="me-2">Modificar</Button></Link>
+            <Link to="/modificar_herramienta"><Button variant="primary" className="me-2">Modificar</Button></Link>
             <Button variant="danger" onClick={handleShow}>Dar de baja</Button>
           </div>
         </Col>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default function ModificarHerramienta() {
+export default function ModificarConsumible() {
   return (
     <Container className="mt-4">
       <Row>
@@ -38,12 +38,16 @@ export default function ModificarHerramienta() {
                     <option selected disabled>Selecciona un nuevo tipo</option>
                     </Form.Select>
                 </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formObservations">
+                <Form.Group className="mb-3 has-validation" controlId="formUnidad">
                   <Form.Control 
-                    as="textarea" 
-                    rows={3} 
-                    placeholder="[Agregar observaciones](Opcional)" 
+                    type="text" 
+                    placeholder="[Agregar nueva unidad](Obligatorio)" 
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3 has-validation" controlId="formUnidad">
+                  <Form.Control 
+                    type="text" 
+                    placeholder="[Agregar nueva cantidad](Obligatorio)" 
                   />
                 </Form.Group>
                 </Form>

@@ -51,7 +51,7 @@ export default function SubirHerramienta() {
             </Card.Body>
           </Card>
           <div className='d-flex justify-content-end'>
-            <Link to="/perfil"><Button variant="danger" className="me-2">Cancelar</Button></Link>
+            <Link to="/perfil_herramienta"><Button variant="danger" className="me-2">Cancelar</Button></Link>
             <Button variant="primary">Subir</Button>
           </div>
         </Col>
