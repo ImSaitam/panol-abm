@@ -35,7 +35,7 @@ export default function PerfilConsumible() {
             </Card.Body>
           </Card>
           <div className='d-flex justify-content-end'>
-            <Link to="/modificar"><Button variant="primary" className="me-2">Modificar</Button></Link>
+            <Link to="/modificar_consumible"><Button variant="primary" className="me-2">Modificar</Button></Link>
             <Button variant="danger" onClick={handleShow}>Dar de baja</Button>
           </div>
         </Col>

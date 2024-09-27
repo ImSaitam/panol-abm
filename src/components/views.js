@@ -126,7 +126,9 @@ export default function Vista() {
             <Card className="mb-3">
               <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
                 <span>Ejemplo de consumible</span>
+                <Link to="/perfil_consumible">
                 <Button variant="secondary">Ver</Button>
+                </Link>
               </Card.Header>
             </Card>
           </Tab.Pane>
