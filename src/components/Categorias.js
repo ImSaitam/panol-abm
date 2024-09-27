@@ -45,11 +45,11 @@ export default function Categorias() {
               </Col>
             </Row>
 
-            {/* Reemplazo de tabla por card con botón a la derecha */}
             <Card className="mb-3">
-              <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
+              <Card.Header as="h5" className="d-flex align-items-center">
                 <span>Ejemplo de Categoría</span>
-                <Button variant="secondary">Ver</Button>
+                <Button variant="primary">Editar</Button>
+                <Button variant="danger">Borrar</Button>
               </Card.Header>
             </Card>
             <AñadirCategoriaBoton />
@@ -67,9 +67,10 @@ export default function Categorias() {
 
             {/* Reemplazo de tabla por card con botón a la derecha */}
             <Card className="mb-3">
-              <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
+              <Card.Header as="h5" className="d-flex align-items-center">
                 <span>Ejemplo de subcategoría</span>
-                <Button variant="secondary">Ver</Button>
+                <Button variant="primary">Editar</Button>
+                <Button variant="danger">Borrar</Button>
               </Card.Header>
             </Card>
             <AñadirSubCategoriaBoton />
@@ -88,9 +89,10 @@ export default function Categorias() {
 
             {/* Reemplazo de tabla por card con botón a la derecha */}
             <Card className="mb-3">
-              <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
+              <Card.Header as="h5" className="d-flex align-items-center">
                 <span>Ejemplo de tipo</span>
-                <Button variant="secondary">Ver</Button>
+                <Button variant="primary">Editar</Button>
+                <Button variant="danger">Borrar</Button>
               </Card.Header>
             </Card>
             <AñadirTipoBoton />

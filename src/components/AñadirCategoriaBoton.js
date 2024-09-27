@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../añadircategoriaboton.css';  // Importa el archivo CSS
+import '../añadircategoriaboton.css';
 
 export default function AñadirCategoriaBoton() {
   const [show, setShow] = useState(false);

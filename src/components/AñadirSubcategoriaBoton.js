@@ -21,7 +21,7 @@ export default function AñadirSubCategoriaBoton() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Añadir subcaategoría</Modal.Title>
+          <Modal.Title>Añadir subcategoría</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
