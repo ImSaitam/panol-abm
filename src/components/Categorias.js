@@ -9,7 +9,7 @@ export default function Categorias() {
   return (
     <>
     <Container className="container-vista">
-      <Tab.Container defaultActiveKey="tools">
+      <Tab.Container defaultActiveKey="category">
         <Row>
           <Col md={4}>
             <Nav variant="tabs">
@@ -37,19 +37,21 @@ export default function Categorias() {
         <Tab.Content className="mt-3">
           <Tab.Pane eventKey="category">
             <Row className="mb-3">
-              <Col md={11}>
+              <Col md={12}>
               <div className='d-flex'>
-                <Form.Control type="text" placeholder="Buscar categoría" />
-                <Button variant='secondary'>Buscar</Button>
-                </div>
+                <Form.Control type="text" className='mt-2' placeholder="Buscar categoría" />
+                <Button variant='secondary' className='h-75'>Buscar</Button>
+              </div>
               </Col>
             </Row>
 
             <Card className="mb-3">
-              <Card.Header as="h5" className="d-flex align-items-center">
+              <Card.Header as="h5" className="d-flex align-items-center justify-content-between">
                 <span>Ejemplo de Categoría</span>
-                <Button variant="primary">Editar</Button>
-                <Button variant="danger">Borrar</Button>
+                <div className='d-flex flex-row-reverse mb-2'>
+                  <Button className='ms-3' variant="primary">Editar</Button>
+                  <Button variant="danger">Borrar</Button>
+                </div>
               </Card.Header>
             </Card>
             <AñadirCategoriaBoton />
@@ -57,20 +59,22 @@ export default function Categorias() {
 
           <Tab.Pane eventKey="subcategory">
             <Row className="mb-3">
-              <Col md={11}>
+              <Col md={12}>
               <div className='d-flex'>
-                <Form.Control type="text" placeholder="Buscar subcategoría" />
-                <Button variant='secondary'>Buscar</Button>
+                <Form.Control type="text" className='mt-2' placeholder="Buscar subcategoría" />
+                <Button variant='secondary' className='h-75'>Buscar</Button>
                 </div>
               </Col>
             </Row>
 
             {/* Reemplazo de tabla por card con botón a la derecha */}
             <Card className="mb-3">
-              <Card.Header as="h5" className="d-flex align-items-center">
+              <Card.Header as="h5" className="d-flex align-items-center justify-content-between">
                 <span>Ejemplo de subcategoría</span>
-                <Button variant="primary">Editar</Button>
-                <Button variant="danger">Borrar</Button>
+                <div className='d-flex flex-row-reverse mb-2'>
+                  <Button className='ms-3' variant="primary">Editar</Button>
+                  <Button variant="danger">Borrar</Button>
+                </div>
               </Card.Header>
             </Card>
             <AñadirSubCategoriaBoton />
@@ -79,20 +83,22 @@ export default function Categorias() {
           {/* Tab for "Consumibles" */}
           <Tab.Pane eventKey="type">
           <Row className="mb-3">
-              <Col md={11}>
+              <Col md={12}>
               <div className='d-flex'>
-                <Form.Control type="text" placeholder="Buscar tipo" />
-                <Button variant='secondary'>Buscar</Button>
+                <Form.Control type="text" className='mt-2' placeholder="Buscar tipo" />
+                <Button variant='secondary' className='h-75'>Buscar</Button>
                 </div>
               </Col>
             </Row>
 
             {/* Reemplazo de tabla por card con botón a la derecha */}
             <Card className="mb-3">
-              <Card.Header as="h5" className="d-flex align-items-center">
+              <Card.Header as="h5" className="d-flex align-items-center justify-content-between">
                 <span>Ejemplo de tipo</span>
-                <Button variant="primary">Editar</Button>
-                <Button variant="danger">Borrar</Button>
+                <div className='d-flex flex-row-reverse mb-2'>
+                  <Button className='ms-3' variant="primary">Editar</Button>
+                  <Button variant="danger">Borrar</Button>
+                </div>
               </Card.Header>
             </Card>
             <AñadirTipoBoton />
