@@ -43,22 +43,7 @@ function SidebarMenu() {
         </Offcanvas.Body>
       </Offcanvas>
 
-      <Button
-        variant="light"
-        onClick={show ? handleClose : handleShow}
-        className="position-absolute top-50 translate-middle-y"
-        style={{
-          zIndex: 1050,
-          borderRadius: "50%",
-          width: "40px",
-          height: "40px",
-          border: "1px solid #ccc",
-          transition: "margin-left 0.4s ease",
-          marginLeft: show ? "53vh" : "0px",
-        }}
-      >
-        {show ? "⯇" : "⯈"}
-      </Button>
+
     </>
   );
 }

@@ -16,7 +16,7 @@ export default function App() {
                 <Route path='/perfil' element={<Perfil />} />
                 <Route path='/modificar' element={<ModificarHerramientas />} />
                 <Route path='/subir' element={<SubirHerramienta />} />
-                <Route path='/categoria' element={<Categorias />} />
+                <Route path='/gestion_categorias' element={<Categorias />} />
             </Routes>
         </BrowserRouter>
     );
