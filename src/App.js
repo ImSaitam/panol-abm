@@ -6,6 +6,7 @@ import Perfil from './components/Perfil';
 import ModificarHerramientas from './components/ModificarHerramientas';
 import SubirHerramienta from './components/SubirHerramientas';
 import Categorias from './components/Categorias';
+import SubirConsumibles from './components/SubirConsumibles';
 
 export default function App() {
     return (
@@ -15,8 +16,9 @@ export default function App() {
                 <Route path='/ver' element={<Vista/>} />
                 <Route path='/perfil' element={<Perfil />} />
                 <Route path='/modificar' element={<ModificarHerramientas />} />
-                <Route path='/subir' element={<SubirHerramienta />} />
+                <Route path='/subir_herramientas' element={<SubirHerramienta />} />
                 <Route path='/gestion_categorias' element={<Categorias />} />
+                <Route path='/subir_consumibles' element={<SubirConsumibles />} />
             </Routes>
         </BrowserRouter>
     );

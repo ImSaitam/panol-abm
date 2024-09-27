@@ -49,14 +49,18 @@ export default function Inicio() {
                     onMouseLeave={handleMouseLeave}
                 >
                     <Accordion.Item eventKey="1">
-                        <Link to =""></Link>
+
                         <Accordion.Header>Agregar </Accordion.Header>
+                        <Link to ="/subir_herramientas" className = "text-decoration-none">
                         <Accordion.Body>
                            Agregar herramientas
                         </Accordion.Body>
+                        </Link>
+                        <Link to ="/subir_consumibles" className = "text-decoration-none">
                         <Accordion.Body>
                            Agregar consumibles
                         </Accordion.Body>
+                        </Link>
                     </Accordion.Item>
                 </Accordion>
             </div>
