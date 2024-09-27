@@ -18,7 +18,7 @@ export default function SubirHerramienta() {
             <Card.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="formName">
-                  <Form.Control type="text" placeholder="[Agregar nombre] (Obligatorio)" />
+                  <Form.Control type="text" placeholder="[Agregar nombre] (Obligatorio)" required/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formCategory">
@@ -44,6 +44,7 @@ export default function SubirHerramienta() {
                     as="textarea" 
                     rows={3} 
                     placeholder="[Agregar observaciones](Opcional)" 
+                    required
                   />
                 </Form.Group>
                 </Form>

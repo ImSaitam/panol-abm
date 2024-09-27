@@ -21,7 +21,7 @@ export default function AñadirTipoBoton() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Añadir subcaategoría</Modal.Title>
+          <Modal.Title>Añadir tipo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
