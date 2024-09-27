@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Tab, Nav, Form, Button, Card } from 'react-bootstrap';
 import '../views.css';
+import { Link } from 'react-router-dom';
 
 export default function Vista() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
@@ -85,7 +86,9 @@ export default function Vista() {
             <Card className="mb-3">
               <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
                 <span>Ejemplo de herramienta</span>
+                <Link to="/perfil_herramienta">
                 <Button variant="secondary">Ver</Button>
+                </Link>
               </Card.Header>
             </Card>
           </Tab.Pane>
