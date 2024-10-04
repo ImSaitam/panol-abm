@@ -1,21 +1,53 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../añadircategoriaboton.css';  // Importa el archivo CSS
+import React, { useState, useEffect } from "react";
+import { Button, Modal, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../añadircategoriaboton.css";
+import axios from "axios";
 
 export default function AñadirSubCategoriaBoton() {
   const [show, setShow] = useState(false);
+  const [categorias, setCategorias] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [formData, setFormData] = useState({
+    nombre: "",
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/subcategoria",
+        { ...formData, categoria_id: selectedCategoryId },
+        {
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/categorias");
+        setCategorias(response.data);
+      } catch (error) {
+        console.error("Error al obtener las categorías", error);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
+
   return (
     <>
-      <Button
-        variant="secondary"
-        onClick={handleShow}
-        className="add-button"
-      >
+      <Button variant="secondary" onClick={handleShow} className="add-button">
         +
       </Button>
 
@@ -24,23 +56,38 @@ export default function AñadirSubCategoriaBoton() {
           <Modal.Title>Añadir subcategoría</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formCategoryName">
-              <Form.Label>Seleccione la categoría</Form.Label>
-              <Form.Select>
-                <option value="Categoría 1">Categoría 1</option>
+              <Form.Select
+                onChange={(event) => {
+                  setSelectedCategoryId(event.target.value);
+                  setFormData({ ...formData, categoriaId: event.target.value });
+                }}
+              >
+                <option value="">Seleccione la categoría</option>
+                {categorias.map((categoria) => (
+                  <option key={categoria.id} value={categoria.id}>
+                    {categoria.nombre}
+                  </option>
+                ))}
               </Form.Select>
               <Form.Label>Nombre de subcategoría</Form.Label>
-              <Form.Control type="text" placeholder="Ingresa el nombre de la subcategoría" />
+              <Form.Control
+                type="text"
+                placeholder="Ingresa el nombre de la subcategoría"
+                onChange={(event) =>
+                  setFormData({ ...formData, nombre: event.target.value })
+                }
+              />
             </Form.Group>
+            <Button type="submit" variant="primary" onClick={handleClose}>
+              Guardar
+            </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Guardar
           </Button>
         </Modal.Footer>
       </Modal>
