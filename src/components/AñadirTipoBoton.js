@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../añadircategoriaboton.css';  // Importa el archivo CSS
+import '../añadircategoriaboton.css';
+import axios from 'axios';
 
 export default function AñadirTipoBoton() {
   const [show, setShow] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -28,7 +32,7 @@ export default function AñadirTipoBoton() {
             <Form.Group controlId="formCategoryName">
               <Form.Label>Seleccione la categoría</Form.Label>
               <Form.Select>
-                <option value="Categoría 1">Categoría 1</option>
+ 
               </Form.Select>
               <Form.Label>Seleccione la subcategoría</Form.Label>
               <Form.Select>
@@ -37,14 +41,14 @@ export default function AñadirTipoBoton() {
               <Form.Label>Nombre de tipo</Form.Label>
               <Form.Control type="text" placeholder="Ingresa el nombre del tipo" />
             </Form.Group>
+            <Button type='submit' variant="primary" onClick={handleClose}>
+            Guardar
+          </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Guardar
           </Button>
         </Modal.Footer>
       </Modal>
