@@ -16,10 +16,12 @@ import axios from "axios";
 
 export default function Categorias() {
   const [categorias, setCategorias] = useState([]);
+  const [subcategorias, setSubcategorias] = useState([]);
+  const [tipos, setTipos] = useState([]);
 
   const fetchCategorias = async () => {
     try {
-      const response = await axios.get("/categorias");
+      const response = await axios.get("http://localhost:5000/categorias");
       setCategorias(response.data);
     } catch (error) {
       console.error(error);
@@ -28,6 +30,32 @@ export default function Categorias() {
 
   useEffect(() => {
     fetchCategorias();
+  }, []);
+
+  const fetchSubcategorias = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/subcategorias");
+      setSubcategorias(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubcategorias();
+  }, []);
+
+  const fetchTipos = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/tipos-herramienta");
+      setTipos(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTipos();
   }, []);
 
   return (
@@ -109,20 +137,22 @@ export default function Categorias() {
                 </Col>
               </Row>
 
-              <Card className="mb-3">
-                <Card.Header
-                  as="h5"
-                  className="d-flex align-items-center justify-content-between"
-                >
-                  <span>Ejemplo de subcategoría</span>
-                  <div className="d-flex flex-row-reverse mb-2">
-                    <Button className="ms-3" variant="primary">
-                      Editar
-                    </Button>
-                    <Button variant="danger">Borrar</Button>
-                  </div>
-                </Card.Header>
-              </Card>
+              {subcategorias.map((subcategoria) => (
+                <Card key={subcategoria.id} className="mb-3">
+                  <Card.Header
+                    as="h5"
+                    className="d-flex align-items-center justify-content-between"
+                  >
+                    <span>{subcategoria.nombre}</span>
+                    <div className="d-flex flex-row-reverse mb-2">
+                      <Button className="ms-3" variant="primary">
+                        Editar
+                      </Button>
+                      <Button variant="danger">Borrar</Button>
+                    </div>
+                  </Card.Header>
+                </Card>
+              ))}
               <AñadirSubCategoriaBoton />
             </Tab.Pane>
 
@@ -142,20 +172,22 @@ export default function Categorias() {
                 </Col>
               </Row>
 
-              <Card className="mb-3">
-                <Card.Header
-                  as="h5"
-                  className="d-flex align-items-center justify-content-between"
-                >
-                  <span>Ejemplo de tipo</span>
-                  <div className="d-flex flex-row-reverse mb-2">
-                    <Button className="ms-3" variant="primary">
-                      Editar
-                    </Button>
-                    <Button variant="danger">Borrar</Button>
-                  </div>
-                </Card.Header>
-              </Card>
+              {tipos.map((tipo) => (
+                <Card key={tipo.id} className="mb-3">
+                  <Card.Header
+                    as="h5"
+                    className="d-flex align-items-center justify-content-between"
+                  >
+                    <span>{tipo.nombre}</span>
+                    <div className="d-flex flex-row-reverse mb-2">
+                      <Button className="ms-3" variant="primary">
+                        Editar
+                      </Button>
+                      <Button variant="danger">Borrar</Button>
+                    </div>
+                  </Card.Header>
+                </Card>
+              ))}
               <AñadirTipoBoton />
             </Tab.Pane>
           </Tab.Content>
