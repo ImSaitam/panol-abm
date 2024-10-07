@@ -17,8 +17,6 @@ export default function AñadirSubCategoriaBoton() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-
     try {
       const response = await axios.post(
         "http://localhost:5000/subcategoria",
@@ -28,7 +26,6 @@ export default function AñadirSubCategoriaBoton() {
         }
       );
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -38,7 +35,6 @@ export default function AñadirSubCategoriaBoton() {
         const response = await axios.get("http://localhost:5000/categorias");
         setCategorias(response.data);
       } catch (error) {
-        console.error("Error al obtener las categorías", error);
       }
     };
 

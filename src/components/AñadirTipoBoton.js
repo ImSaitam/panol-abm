@@ -21,7 +21,6 @@ export default function AñadirTipoBoton() {
         const response = await axios.get("http://localhost:5000/categorias");
         setCategorias(response.data);
       } catch (error) {
-        console.error("Error al obtener las categorías", error);
       }
     };
 
@@ -43,7 +42,6 @@ export default function AñadirTipoBoton() {
             )
           );
         } catch (error) {
-          console.error("Error al obtener las subcategorías", error);
         }
       } else {
         setFilteredSubcategorias([]);
@@ -69,7 +67,6 @@ export default function AñadirTipoBoton() {
         }
       );
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -92,7 +89,6 @@ export default function AñadirTipoBoton() {
               <Form.Label>Seleccione la categoría</Form.Label>
               <Form.Select
                 onChange={(event) => {
-                  console.log(event.target.value);
                   setSelectedCategoryId(event.target.value);
                   setFormData({ ...formData, categoriaId: event.target.value });
                 }}

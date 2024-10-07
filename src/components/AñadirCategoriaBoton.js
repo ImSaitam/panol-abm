@@ -21,9 +21,7 @@ export default function AñadirCategoriaBoton() {
         'Content-Type': 'application/json'
       }
       );
-      console.log(response);
     } catch (error) {
-      console.error(error);
     }
   };
 
