@@ -18,6 +18,7 @@ export default function Categorias() {
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
   const [tipos, setTipos] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchCategorias = async () => {
     try {
@@ -58,6 +59,22 @@ export default function Categorias() {
     fetchTipos();
   }, []);
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredCategorias = categorias.filter((categoria) =>
+    categoria.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredSubcategorias = subcategorias.filter((subcategoria) =>
+    subcategoria.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredTipos = tipos.filter((tipo) =>
+    tipo.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <Container className="container-vista">
@@ -95,6 +112,8 @@ export default function Categorias() {
                       type="text"
                       className="mt-2"
                       placeholder="Buscar categoría"
+                      value={searchQuery}
+                      onChange={handleSearch}
                     />
                     <Button variant="secondary" className="h-75">
                       Buscar
@@ -102,7 +121,7 @@ export default function Categorias() {
                   </div>
                 </Col>
               </Row>
-              {categorias.map((categoria) => (
+              {filteredCategorias.map((categoria) => (
                 <Card key={categoria.id} className="mb-3">
                   <Card.Header
                     as="h5"
@@ -129,6 +148,8 @@ export default function Categorias() {
                       type="text"
                       className="mt-2"
                       placeholder="Buscar subcategoría"
+                      value={searchQuery}
+                      onChange={handleSearch}
                     />
                     <Button variant="secondary" className="h-75">
                       Buscar
@@ -136,8 +157,7 @@ export default function Categorias() {
                   </div>
                 </Col>
               </Row>
-
-              {subcategorias.map((subcategoria) => (
+              {filteredSubcategorias.map((subcategoria) => (
                 <Card key={subcategoria.id} className="mb-3">
                   <Card.Header
                     as="h5"
@@ -164,6 +184,8 @@ export default function Categorias() {
                       type="text"
                       className="mt-2"
                       placeholder="Buscar tipo"
+                      value={searchQuery}
+                      onChange={handleSearch}
                     />
                     <Button variant="secondary" className="h-75">
                       Buscar
@@ -171,8 +193,7 @@ export default function Categorias() {
                   </div>
                 </Col>
               </Row>
-
-              {tipos.map((tipo) => (
+              {filteredTipos.map((tipo) => (
                 <Card key={tipo.id} className="mb-3">
                   <Card.Header
                     as="h5"
