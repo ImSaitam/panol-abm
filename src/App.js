@@ -21,8 +21,8 @@ export default function App() {
                 <Route path='/subir_herramientas' element={<SubirHerramienta />} />
                 <Route path='/gestion_categorias' element={<Categorias />} />
                 <Route path='/subir_consumibles' element={<SubirConsumibles />} />
-                <Route path= '/perfil_consumible' element={<PerfilConsumible />} />
-                <Route path= '/modificar_consumible' element={<ModificarConsumible/>}/>
+                <Route path= '/perfil_consumible/:id' element={<PerfilConsumible />} />
+                <Route path= '/modificar_consumible/:id' element={<ModificarConsumible/>}/>
             </Routes>
         </BrowserRouter>
     );
