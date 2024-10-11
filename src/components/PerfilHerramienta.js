@@ -3,12 +3,11 @@ import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 
 export default function PerfilHerramienta() {
-  const { id } = useParams();  // Extraemos el ID de la URL
+  const { id } = useParams();  
   const [herramienta, setHerramienta] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState(null);  // Estado para manejar errores
+  const [error, setError] = useState(null);  
 
-  // Petición para obtener los datos de la herramienta
   useEffect(() => {
     const fetchHerramienta = async () => {
       try {
@@ -37,12 +36,27 @@ export default function PerfilHerramienta() {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const handleDeactivate = () => {
-    alert('Herramienta dada de baja.');
-    handleClose();
+  const handleDeactivate = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/herramienta?id=${id}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al dar de baja la herramienta');
+      }
+  
+      const data = await response.json();
+      console.log('Respuesta del servidor:', data);
+      alert('Herramienta dada de baja exitosamente.');
+      
+      handleClose(); // Cerrar el modal
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Hubo un problema al dar de baja la herramienta.');
+    }
   };
-
-  // Si hay un error, mostramos el mensaje de error
+  
   if (error) {
     return <p>Error: {error}</p>;
   }
