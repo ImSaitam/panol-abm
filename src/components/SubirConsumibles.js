@@ -88,9 +88,6 @@ export default function SubirConsumibles() {
           <Card style={{ height: '80.5vh'}}>
             <Card.Body>
             <Form>
-                <Form.Group className="mb-3" controlId="formName">
-                  <Form.Control type="text" placeholder="[Agregar nombre] (Obligatorio)" />
-                </Form.Group>
                 <Form.Group className="mb-3" controlId="formCategory">
                   <Form.Select 
                     name="categoria_id" 

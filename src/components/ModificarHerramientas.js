@@ -151,19 +151,7 @@ export default function ModificarHerramienta() {
         <Col md={6}>
           <Card style={{ height: '80.5vh' }}>
             <Card.Body>
-              <Form>
-                <Form.Group className="mb-3" controlId="formName">
-                  <Form.Control 
-                    type="text" 
-                    placeholder="[Agregar nombre] (Obligatorio)" 
-                    name="nombre"
-                    value={formData.nombre} 
-                    onChange={handleChange}
-                    isInvalid={!!errors.nombre} // Muestra error si existe
-                  />
-                  <Form.Control.Feedback type="invalid">{errors.nombre}</Form.Control.Feedback>
-                </Form.Group>
-
+              <Form>   
                 <Form.Group className="mb-3" controlId="formCategory">
                   <Form.Select 
                     name="categoria_id" 
