@@ -12,7 +12,6 @@ import {
 import "../views.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import AñadirHerramientaBoton from "./AñadirHerramientasBoton";
 
 const API_URL = "http://localhost:5000";
 
