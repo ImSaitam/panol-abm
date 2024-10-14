@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default function SubirHerramienta() {
   const [formData, setFormData] = useState({
+    imagen: '',
     categoria_id: '',
     subcategoria_id: '',
     tipo_id: '',

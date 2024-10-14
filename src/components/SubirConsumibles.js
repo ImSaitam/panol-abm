@@ -1,9 +1,13 @@
+import axios from 'axios';
 import React, {useEffect, useState} from 'react'
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 export default function SubirConsumibles() {
   const [formData, setFormData] = useState({
+    imagen: "",
+    categoria_id: "",
+    subcategoria_id: "",
     nombre: "",
     unidad: "",
     cantidad: "",
@@ -50,7 +54,6 @@ export default function SubirConsumibles() {
         ...formData,
         categoria_id: value,
         subcategoria_id: '',  // Reinicia subcategoría al cambiar categoría
-        tipo_id: ''           // Reinicia tipo al cambiar subcategoría
       });
       setSubcategorias([]); // Limpia subcategorías
       setTipos([]);         // Limpia tipos
@@ -62,7 +65,6 @@ export default function SubirConsumibles() {
       setFormData({
         ...formData,
         subcategoria_id: value,
-        tipo_id: '' // Reinicia tipo al cambiar subcategoría
       });
       setTipos([]); // Limpia tipos
     }
@@ -72,6 +74,28 @@ export default function SubirConsumibles() {
       ...errors,
       [name]: ''
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      delete formData.categoria_id;
+      delete formData.tipo_id;
+      const response = await axios.post('http://localhost:5000/consumible', formData, {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+
+      if (response.status === 201) {
+        console.log('Herramienta subida exitosamente');
+      }
+    }
+    catch (error) {
+      console.error('Error al subir herramienta', error);
+      console.log(formData)
+    }
   };
 
   return (
@@ -87,7 +111,7 @@ export default function SubirConsumibles() {
         <Col md={6}>
           <Card style={{ height: '80.5vh'}}>
             <Card.Body>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formCategory">
                   <Form.Select 
                     name="categoria_id" 
@@ -120,40 +144,42 @@ export default function SubirConsumibles() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formType">
-                  <Form.Select 
-                    name="tipo_id" 
-                    value={formData.tipo_id} 
+                  <Form.Control 
+                    name="nombre" 
+                    value={formData.nombre} 
                     onChange={handleChange} 
-                    disabled={!formData.subcategoria_id}
-                    isInvalid={!!errors.tipo_id} // Muestra error si existe
+                    placeholder='Agregar nombre'
                   >
-                    <option value="" disabled>Selecciona un tipo</option>
-                    {tipos.map(tipo => (
-                      <option key={tipo.id} value={tipo.id}>{tipo.nombre}</option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">{errors.tipo_id}</Form.Control.Feedback>
+                  
+                  </Form.Control>
                 </Form.Group>
 
                 <Form.Group className="mb-3 has-validation" controlId="formUnidad">
                   <Form.Control 
                     type="text" 
+                    name="unidad"
                     placeholder="[Agregar unidad](Obligatorio)" 
+                    value={formData.unidad} 
+                    onChange={handleChange} 
                   />
                 </Form.Group>
                 <Form.Group className="mb-3 has-validation" controlId="formUnidad">
                   <Form.Control 
                     type="text" 
+                    name='cantidad'
                     placeholder="[Agregar cantidad](Obligatorio)" 
+                    value={formData.cantidad} 
+                    onChange={handleChange} 
                   />
                 </Form.Group>
+                <div className='d-flex justify-content-end'>
+            <Link to="/ver"><Button variant="danger" className="me-2">Cancelar</Button></Link>
+            <Button type='submit' variant="primary">Subir</Button>
+          </div>
                 </Form>
             </Card.Body>
           </Card>
-          <div className='d-flex justify-content-end'>
-            <Link to="/ver"><Button variant="danger" className="me-2">Cancelar</Button></Link>
-            <Button variant="primary">Subir</Button>
-          </div>
+          
         </Col>
       </Row>
     </Container>
