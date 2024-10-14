@@ -88,9 +88,6 @@ export default function SubirConsumibles() {
           <Card style={{ height: '80.5vh'}}>
             <Card.Body>
             <Form>
-                <Form.Group className="mb-3" controlId="formName">
-                  <Form.Control type="text" placeholder="[Agregar nombre] (Obligatorio)" />
-                </Form.Group>
                 <Form.Group className="mb-3" controlId="formCategory">
                   <Form.Select 
                     name="categoria_id" 
@@ -154,7 +151,7 @@ export default function SubirConsumibles() {
             </Card.Body>
           </Card>
           <div className='d-flex justify-content-end'>
-            <Link to="/perfil_consumible"><Button variant="danger" className="me-2">Cancelar</Button></Link>
+            <Link to="/ver"><Button variant="danger" className="me-2">Cancelar</Button></Link>
             <Button variant="primary">Subir</Button>
           </div>
         </Col>

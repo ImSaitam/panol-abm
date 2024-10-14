@@ -84,7 +84,12 @@ export default function PerfilHerramienta() {
                 </Card.Body>
               </Card>
               <div className='d-flex justify-content-end'>
-              <Link to={`/modificar_herramienta/${herramienta.id}`}><Button variant="primary" className="me-2">Modificar</Button></Link>
+              <Link to={`/ver`}>
+              <Button variant="secondary" className="me-2">Volver</Button>
+              </Link>  
+              <Link to={`/modificar_herramienta/${herramienta.id}`}>
+              <Button variant="primary" className="me-2">Modificar</Button>
+              </Link>
                 <Button variant="danger" onClick={handleShow}>Dar de baja</Button>
               </div>
             </Col>
