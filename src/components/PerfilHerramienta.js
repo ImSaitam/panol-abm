@@ -53,7 +53,7 @@ export default function PerfilHerramienta() {
       handleClose(); // Cerrar el modal
     } catch (error) {
       console.error('Error:', error);
-      alert('Hubo un problema al dar de baja la herramienta.');
+      alert('Hubo un problema al dar de baja la herramienta.');//este menssaje va a salir si la imagen esta en null en la base de datos
     }
   };
   

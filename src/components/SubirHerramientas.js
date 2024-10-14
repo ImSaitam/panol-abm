@@ -5,13 +5,17 @@ import axios from "axios";
 
 export default function SubirHerramienta() {
   const [formData, setFormData] = useState({
-    image: null,
+    image: '',
+    categoria_id: '',
+    subcategoria_id: '',
+    tipo_id: '',
+    observaciones: ''
   });
   const [showModal, setShowModal] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
   const [tipos, setTipos] = useState([]);
-    const [errors, setErrors] = useState({}); // Estado para errores
+  const [errors, setErrors] = useState({}); // Estado para errores
 
   const handleImageChange = (event) => {
     setFormData({ ...formData, image: event.target.files[0] });
@@ -55,7 +59,6 @@ export default function SubirHerramienta() {
       [name]: value
     });
 
-    // Fetch subcategorías cuando se selecciona una categoría
     if (name === 'categoria_id') {
       fetchSubcategorias(value);
       setFormData({
@@ -68,7 +71,6 @@ export default function SubirHerramienta() {
       setTipos([]);         // Limpia tipos
     }
 
-    // Fetch tipos cuando se selecciona una subcategoría
     if (name === 'subcategoria_id') {
       fetchTipos(value);
       setFormData({
@@ -79,11 +81,35 @@ export default function SubirHerramienta() {
       setTipos([]); // Limpia tipos
     }
 
-    // Limpia el mensaje de error al cambiar el valor del campo
     setErrors({
       ...errors,
       [name]: ''
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append('observaciones', formData.observaciones);
+    data.append('tipo_id', formData.tipo_id);
+    if (formData.image) {
+      data.append('imagen', formData.image);
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/herramienta', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (response.status === 201) {
+        console.log('Herramienta subida exitosamente');
+      }
+    } catch (error) {
+      console.error('Error al subir herramienta', error);
+    }
   };
 
   return (
@@ -105,13 +131,13 @@ export default function SubirHerramienta() {
         <Col md={6}>
           <Card style={{ height: '80.5vh' }}>
             <Card.Body>
-              <Form>
-              <Form.Group className="mb-3" controlId="formCategory">
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="formCategory">
                   <Form.Select 
                     name="categoria_id" 
                     value={formData.categoria_id} 
                     onChange={handleChange}
-                    isInvalid={!!errors.categoria_id} // Muestra error si existe
+                    isInvalid={!!errors.categoria_id}
                   >
                     <option value="" disabled>Selecciona una categoría</option>
                     {categorias.map(cat => (
@@ -127,7 +153,7 @@ export default function SubirHerramienta() {
                     value={formData.subcategoria_id} 
                     onChange={handleChange} 
                     disabled={!formData.categoria_id}
-                    isInvalid={!!errors.subcategoria_id} // Muestra error si existe
+                    isInvalid={!!errors.subcategoria_id}
                   >
                     <option value="" disabled>Selecciona una subcategoría</option>
                     {subcategorias.map(sub => (
@@ -143,7 +169,7 @@ export default function SubirHerramienta() {
                     value={formData.tipo_id} 
                     onChange={handleChange} 
                     disabled={!formData.subcategoria_id}
-                    isInvalid={!!errors.tipo_id} // Muestra error si existe
+                    isInvalid={!!errors.tipo_id}
                   >
                     <option value="" disabled>Selecciona un tipo</option>
                     {tipos.map(tipo => (
@@ -157,17 +183,21 @@ export default function SubirHerramienta() {
                   <Form.Control 
                     as="textarea" 
                     rows={3} 
-                    placeholder="[Agregar observaciones](Opcional)" 
+                    name="observaciones"
+                    placeholder="[Agregar observaciones] (Opcional)" 
+                    value={formData.observaciones}
+                    onChange={handleChange}
                     required
                   />
                 </Form.Group>
+
+                <div className='d-flex justify-content-end'>
+                  <Link to="/ver"><Button variant="danger" className="me-2">Cancelar</Button></Link>
+                  <Button type="submit" variant="primary">Subir</Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
-          <div className='d-flex justify-content-end'>
-            <Link to="/ver"><Button variant="danger" className="me-2">Cancelar</Button></Link>
-            <Button variant="primary">Subir</Button>
-          </div>
         </Col>
       </Row>
 

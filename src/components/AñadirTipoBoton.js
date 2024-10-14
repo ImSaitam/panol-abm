@@ -66,6 +66,7 @@ export default function AñadirTipoBoton() {
           "Content-Type": "application/json",
         }
       );
+      window.location.reload();
     } catch (error) {
     }
   };
