@@ -5,7 +5,6 @@ import axios from "axios";
 
 export default function SubirHerramienta() {
   const [formData, setFormData] = useState({
-    image: '',
     categoria_id: '',
     subcategoria_id: '',
     tipo_id: '',
@@ -90,25 +89,23 @@ export default function SubirHerramienta() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-    data.append('observaciones', formData.observaciones);
-    data.append('tipo_id', formData.tipo_id);
-    if (formData.image) {
-      data.append('imagen', formData.image);
-    }
-
     try {
-      const response = await axios.post('http://localhost:5000/herramienta', data, {
+      delete formData.categoria_id;
+      delete formData.subcategoria_id;
+      delete formData.image;
+      const response = await axios.post('http://localhost:5000/herramienta', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "application/json",
         }
       });
 
       if (response.status === 201) {
         console.log('Herramienta subida exitosamente');
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Error al subir herramienta', error);
+      console.log(formData)
     }
   };
 
@@ -206,7 +203,7 @@ export default function SubirHerramienta() {
           <Modal.Title>Seleccionar imagen</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input type="file" onChange={handleImageChange} />
+          <input type="file" />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleModalClose}>
