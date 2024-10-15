@@ -288,23 +288,7 @@ export default function Vista() {
                 </Form.Select>
               </Col>
 
-              <Col md={3}>
-                <Form.Select
-                  aria-label="Tipo"
-                  value={tipoSeleccionado}
-                  onChange={(e) => setTipoSeleccionado(e.target.value)}
-                  disabled={!subcategoriaSeleccionada}
-                >
-                  <option value="">Tipo</option>
-                  {tipos.map((tipo) => (
-                    <option key={tipo.id} value={tipo.id}>
-                      {tipo.nombre}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Col>
-
-              <Col md={3}>
+              <Col md={6}>
                 <Form.Control
                   type="text"
                   placeholder="Buscar por nombre o id"
