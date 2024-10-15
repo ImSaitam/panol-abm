@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function PerfilConsumible() {
   const { id } = useParams(); // Extraemos el ID de la URL
@@ -37,9 +38,16 @@ export default function PerfilConsumible() {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const handleDeactivate = () => {
-    alert('Consumible dado de baja.');
-    handleClose();
+  const handleDeactivate = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/consumible?id=${id}`);
+      alert('Consumible dado de baja.');
+      window.location.href = "/ver";
+      handleClose();
+    } catch (error) {
+      console.error('Error al eliminar el consumible:', error);
+      alert('Error al eliminar el consumible.');
+    }
   };
 
   // Si hay un error, mostramos el mensaje de error

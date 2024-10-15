@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function PerfilHerramienta() {
   const { id } = useParams();  
@@ -38,22 +39,13 @@ export default function PerfilHerramienta() {
 
   const handleDeactivate = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/herramienta?id=${id}`, {
-        method: 'DELETE',
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error al dar de baja la herramienta');
-      }
-  
-      const data = await response.json();
-      console.log('Respuesta del servidor:', data);
-      alert('Herramienta dada de baja exitosamente.');
-      
-      handleClose(); // Cerrar el modal
+      await axios.delete(`http://localhost:5000/herramienta?id=${id}`);
+      alert('Herramienta dado de baja.');
+      window.location.href = "/ver";
+      handleClose();
     } catch (error) {
-      console.error('Error:', error);
-      alert('Hubo un problema al dar de baja la herramienta.');//este menssaje va a salir si la imagen esta en null en la base de datos
+      console.error('Error al eliminar la herramienta:', error);
+      alert('Error al eliminar el herramienta.');
     }
   };
   

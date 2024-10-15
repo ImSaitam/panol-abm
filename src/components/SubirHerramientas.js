@@ -102,6 +102,7 @@ export default function SubirHerramienta() {
 
       if (response.status === 201) {
         console.log('Herramienta subida exitosamente');
+        window.location.href = "/ver";
       }
     }
     catch (error) {
