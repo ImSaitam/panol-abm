@@ -125,21 +125,19 @@ export default function Vista() {
     );
   });
 
-  // Filtrar consumibles según las selecciones y la búsqueda
-  const consumiblesFiltrados = consumibles.filter((consumible) => {
-    return (
-      (!categoriaSeleccionada ||
-        consumible.categoria_id === parseInt(categoriaSeleccionada)) &&
-      (!subcategoriaSeleccionada ||
-        consumible.subcategoria_id === parseInt(subcategoriaSeleccionada)) &&
-      (!busqueda ||
-        (consumible.tipo_nombre &&
-          consumible.tipo_nombre
-            .toLowerCase()
-            .includes(busqueda.toLowerCase())) || // Filtrar por tipo de consumible
-        consumible.id === parseInt(busqueda)) // Búsqueda exacta por ID
-    );
-  });
+// Filtrar consumibles según las selecciones y la búsqueda
+const consumiblesFiltrados = consumibles.filter((consumible) => {
+  return (
+    (!categoriaSeleccionada ||
+      consumible.categoria_id === parseInt(categoriaSeleccionada)) &&
+    (!subcategoriaSeleccionada ||
+      consumible.subcategoria_id === parseInt(subcategoriaSeleccionada)) &&
+    (!busqueda ||
+      (consumible.nombre && // Filtrar por nombre de consumible
+        consumible.nombre.toLowerCase().includes(busqueda.toLowerCase())) || // Filtrar por nombre
+      consumible.id === parseInt(busqueda)) // Búsqueda exacta por ID
+  );
+});
 
   return (
     <Container className="container-vista">
