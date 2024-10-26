@@ -107,7 +107,6 @@ export default function Vista() {
   }, [subcategoriaSeleccionada]);
 
   // Filtrar herramientas según las selecciones y la búsqueda
-  // Filtrar herramientas según las selecciones y la búsqueda
   const herramientasFiltradas = herramientas.filter((herramienta) => {
     return (
       (!categoriaSeleccionada ||

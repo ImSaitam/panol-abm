@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
@@ -113,27 +114,23 @@ export default function ModificarHerramienta() {
   };
 
   const handleModificar = async () => {
-    if (!validateForm()) {
-      return; // No enviar el formulario si hay errores
-    }
-
     try {
-      const response = await fetch(`http://localhost:5000/herramienta?id=${id}`, {
-        method: 'PUT',
+      const response = await axios.put(`http://localhost:5000/herramienta`, formData, {
+        params: { id: id }, // ID en la query
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         alert('Herramienta modificada exitosamente');
-        navigate(`/perfil_herramienta/${id}`);  // Redirige de vuelta al perfil de la herramienta
+        navigate(`/perfil_herramienta/${id}`);
       } else {
+        console.error('Error en la respuesta:', response.status);
         alert('Error al modificar la herramienta');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error en la solicitud:', error);
       alert('Error al modificar la herramienta');
     }
   };
@@ -209,13 +206,13 @@ export default function ModificarHerramienta() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
           <div className='d-flex justify-content-end'>
             <Link to={`/perfil_herramienta/${id}`}><Button variant="danger" className="me-2">Cancelar</Button></Link>
             <Button variant="primary" onClick={handleModificar}>Modificar</Button>
           </div>
+              </Form>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
