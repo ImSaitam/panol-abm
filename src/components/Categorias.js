@@ -33,9 +33,7 @@ export default function Categorias() {
     try {
       const response = await axios.get("http://localhost:5000/categorias");
       setCategorias(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -46,9 +44,7 @@ export default function Categorias() {
     try {
       const response = await axios.get("http://localhost:5000/subcategorias");
       setSubcategorias(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -57,11 +53,11 @@ export default function Categorias() {
 
   const fetchTipos = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/tipos-herramienta");
+      const response = await axios.get(
+        "http://localhost:5000/tipos-herramienta"
+      );
       setTipos(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -87,36 +83,38 @@ export default function Categorias() {
   const handleCategoriaDelete = async () => {
     if (categoriaToDelete) {
       try {
-        await axios.delete(`http://localhost:5000/categoria?id=${categoriaToDelete.id}`);
-        setCategorias(categorias.filter(c => c.id !== categoriaToDelete.id));
+        await axios.delete(
+          `http://localhost:5000/categoria?id=${categoriaToDelete.id}`
+        );
+        setCategorias(categorias.filter((c) => c.id !== categoriaToDelete.id));
         setShowCategoriaModal(false);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     }
   };
 
   const handleSubcategoriaDelete = async () => {
     if (subcategoriaToDelete) {
       try {
-        await axios.delete(`http://localhost:5000/subcategoria?id=${subcategoriaToDelete.id}`);
-        setSubcategorias(subcategorias.filter(c => c.id !== subcategoriaToDelete.id));
+        await axios.delete(
+          `http://localhost:5000/subcategoria?id=${subcategoriaToDelete.id}`
+        );
+        setSubcategorias(
+          subcategorias.filter((c) => c.id !== subcategoriaToDelete.id)
+        );
         setShowSubcategoriaModal(false);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     }
   };
 
   const handleTipoDelete = async () => {
     if (tipoToDelete) {
       try {
-        await axios.delete(`http://localhost:5000/tipo-herramienta?id=${tipoToDelete.id}`);
-        setTipos(tipos.filter(c => c.id !== tipoToDelete.id));
+        await axios.delete(
+          `http://localhost:5000/tipo-herramienta?id=${tipoToDelete.id}`
+        );
+        setTipos(tipos.filter((c) => c.id !== tipoToDelete.id));
         setShowTipoModal(false);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     }
   };
 
@@ -129,27 +127,42 @@ export default function Categorias() {
     event.preventDefault();
     if (editItem) {
       try {
-        const url = editItem.type === 'categoria' 
-          ? `http://localhost:5000/categoria?id=${editItem.id}` 
-          : editItem.type === 'subcategoria' 
-          ? `http://localhost:5000/subcategoria?id=${editItem.id}` 
-          : `http://localhost:5000/tipo-herramienta?id=${editItem.id}`;
-        
-        await axios.put(url, { nombre: editItem.nombre, categoriaId: editItem.categoriaId });
-        
-        // Update local state
-        if (editItem.type === 'categoria') {
-          setCategorias(categorias.map(c => c.id === editItem.id ? editItem : c));
-        } else if (editItem.type === 'subcategoria') {
-          setSubcategorias(subcategorias.map(s => s.id === editItem.id ? editItem : s));
-        } else {
-          setTipos(tipos.map(t => t.id === editItem.id ? editItem : t));
+        let url;
+        let data;
+
+        // Determina la URL y los datos según el tipo de elemento que se está editando
+        if (editItem.type === "categoria") {
+          url = `http://localhost:5000/categoria?id=${editItem.id}`;
+          data = { nombre: editItem.nombre }; // Solo el nombre para categoría
+        } else if (editItem.type === "subcategoria") {
+          url = `http://localhost:5000/subcategoria?id=${editItem.id}`;
+          data = {
+            nombre: editItem.nombre,
+            categoria_id: editItem.categoriaId,
+          }; // Incluye categoriaId
+        } else if (editItem.type === "tipo") {
+          url = `http://localhost:5000/tipo-herramienta?id=${editItem.id}`;
+          data = { nombre: editItem.nombre }; // Solo el nombre para tipo
         }
-        
+
+        // Realiza la solicitud PUT
+        await axios.put(url, data);
+
+        // Actualiza el estado local según el tipo de elemento
+        if (editItem.type === "categoria") {
+          setCategorias(
+            categorias.map((c) => (c.id === editItem.id ? editItem : c))
+          );
+        } else if (editItem.type === "subcategoria") {
+          setSubcategorias(
+            subcategorias.map((s) => (s.id === editItem.id ? editItem : s))
+          );
+        } else if (editItem.type === "tipo") {
+          setTipos(tipos.map((t) => (t.id === editItem.id ? editItem : t)));
+        }
+
         setShowEditModal(false);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     }
   };
 
@@ -207,22 +220,22 @@ export default function Categorias() {
                   >
                     <span>{categoria.nombre}</span>
                     <div className="d-flex flex-row-reverse mb-2">
-                                            <Button 
-                        className="ms-3" 
-                        variant="primary" 
-                        onClick={() => handleEditClick(categoria, 'categoria')}
+                      <Button
+                        className="ms-3"
+                        variant="primary"
+                        onClick={() => handleEditClick(categoria, "categoria")}
                       >
                         Editar
                       </Button>
-                      <Button 
-                        variant="danger" 
-                        onClick ={() => {
+                      <Button
+                        variant="danger"
+                        onClick={() => {
                           setShowCategoriaModal(true);
                           setCategoriaToDelete(categoria);
                         }}
                       >
                         Borrar
-                        </Button>
+                      </Button>
                     </div>
                   </Card.Header>
                 </Card>
@@ -255,22 +268,24 @@ export default function Categorias() {
                   >
                     <span>{subcategoria.nombre}</span>
                     <div className="d-flex flex-row-reverse mb-2">
-                    <Button 
-                        className="ms-3" 
-                        variant="primary" 
-                        onClick={() => handleEditClick(subcategoria, 'subcategoria')}
+                      <Button
+                        className="ms-3"
+                        variant="primary"
+                        onClick={() =>
+                          handleEditClick(subcategoria, "subcategoria")
+                        }
                       >
                         Editar
                       </Button>
-                        <Button 
-                        variant="danger" 
-                        onClick ={() => {
+                      <Button
+                        variant="danger"
+                        onClick={() => {
                           setShowSubcategoriaModal(true);
                           setSubCategoriaToDelete(subcategoria);
                         }}
                       >
                         Borrar
-                        </Button>
+                      </Button>
                     </div>
                   </Card.Header>
                 </Card>
@@ -303,22 +318,22 @@ export default function Categorias() {
                   >
                     <span>{tipo.nombre}</span>
                     <div className="d-flex flex-row-reverse mb-2">
-                    <Button 
-                        className="ms-3" 
-                        variant="primary" 
-                        onClick={() => handleEditClick(tipo, 'tipo')}
+                      <Button
+                        className="ms-3"
+                        variant="primary"
+                        onClick={() => handleEditClick(tipo, "tipo")}
                       >
                         Editar
                       </Button>
-                      <Button 
-                        variant="danger" 
-                        onClick ={() => {
+                      <Button
+                        variant="danger"
+                        onClick={() => {
                           setShowTipoModal(true);
                           setTipoToDelete(tipo);
                         }}
                       >
                         Borrar
-                        </Button>
+                      </Button>
                     </div>
                   </Card.Header>
                 </Card>
@@ -330,17 +345,47 @@ export default function Categorias() {
 
         <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>Editar {editItem?.type === 'categoria' ? 'Categoría' : editItem?.type === 'subcategoria' ? 'Subcategoría' : 'Tipo de herramienta'}</Modal.Title>
+            <Modal.Title>
+              Editar{" "}
+              {editItem?.type === "categoria"
+                ? "Categoría"
+                : editItem?.type === "subcategoria"
+                ? "Subcategoría"
+                : "Tipo de herramienta"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={handleEditSubmit}>
               <Form.Group controlId="nombre">
                 <Form.Label>Nombre:</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  value={editItem?.nombre} 
-                  onChange={(event) => setEditItem({ ...editItem, nombre: event.target.value })}
+                <Form.Control
+                  type="text"
+                  value={editItem?.nombre}
+                  onChange={(event) =>
+                    setEditItem({ ...editItem, nombre: event.target.value })
+                  }
                 />
+              </Form.Group>
+              <Form.Group controlId="categoriaId">
+                <Form.Label>Categoría:</Form.Label>
+                <Form.Select
+                  value={editItem?.categoriaId}
+                  onChange={(event) =>
+                    setEditItem({
+                      ...editItem,
+                      categoriaId: event.target.value,
+                    })
+                  }
+                >
+                  <option value="" disabled selected>
+                    Selecciona una categoría
+                  </option>
+                  {categorias.map((categoria) => (
+                    <option key={categoria.id} value={categoria.id}>
+                      {categoria.nombre}
+                    </option>
+                  ))}
+                </Form.Select>
               </Form.Group>
               <Button variant="primary" type="submit">
                 Guardar cambios
@@ -349,15 +394,22 @@ export default function Categorias() {
           </Modal.Body>
         </Modal>
 
-        <Modal show={showCategoriaModal} onHide={() => setShowCategoriaModal(false)}>
+        <Modal
+          show={showCategoriaModal}
+          onHide={() => setShowCategoriaModal(false)}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Confirmación de eliminación</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            ¿Estás seguro de eliminar la categoría "{categoriaToDelete?.nombre}"?
+            ¿Estás seguro de eliminar la categoría "{categoriaToDelete?.nombre}
+            "?
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowCategoriaModal(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => setShowCategoriaModal(false)}
+            >
               Cancelar
             </Button>
             <Button variant="danger" onClick={handleCategoriaDelete}>
@@ -365,15 +417,22 @@ export default function Categorias() {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Modal show={showSubcategoriaModal} onHide={() => setShowSubcategoriaModal(false)}>
+        <Modal
+          show={showSubcategoriaModal}
+          onHide={() => setShowSubcategoriaModal(false)}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Confirmación de eliminación</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            ¿Estás seguro de eliminar la subcategoría "{subcategoriaToDelete?.nombre}"?
+            ¿Estás seguro de eliminar la subcategoría "
+            {subcategoriaToDelete?.nombre}"?
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowSubcategoriaModal(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => setShowSubcategoriaModal(false)}
+            >
               Cancelar
             </Button>
             <Button variant="danger" onClick={handleSubcategoriaDelete}>
