@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function ModificarConsumible() {
   const { id } = useParams(); // Extraemos el ID de la URL
@@ -12,23 +13,23 @@ export default function ModificarConsumible() {
   const [nombre, setNombre] = useState('');
   const [unidad, setUnidad] = useState('');
   const [cantidad, setCantidad] = useState('');
+  const [imagen, setImagen] = useState(null); // Para manejar la imagen
+  const [imagenPreview, setImagenPreview] = useState(null); // Para la previsualización
 
   // Obtener los datos del consumible al cargar el componente
   useEffect(() => {
     const fetchConsumible = async () => {
       try {
         const response = await fetch(`http://localhost:5000/consumible?id=${id}`);
-        if (!response.ok) {
-          throw new Error(`Error HTTP! Estado: ${response.status}`);
-        }
         const data = await response.json();
         if (data.length > 0) {
-          setConsumible(data[0]);
-          setNombre(data[0].nombre);
-          setUnidad(data[0].unidad);
-          setCantidad(data[0].cantidad);
-          setSelectedSubcategoria(data[0].subcategoria_id); // Establecemos la subcategoría seleccionada
-          setSelectedCategoria(data[0].subcategoria_id); // Establecemos la categoría seleccionada
+          const consumibleData = data[0];
+          setConsumible(consumibleData);
+          setNombre(consumibleData.nombre);
+          setUnidad(consumibleData.unidad);
+          setCantidad(consumibleData.cantidad);
+          setSelectedSubcategoria(consumibleData.subcategoria_id);
+          setSelectedCategoria(consumibleData.categoria_id);
         } else {
           throw new Error('No se encontró el consumible');
         }
@@ -45,9 +46,6 @@ export default function ModificarConsumible() {
     const fetchCategorias = async () => {
       try {
         const response = await fetch('http://localhost:5000/categorias');
-        if (!response.ok) {
-          throw new Error(`Error HTTP! Estado: ${response.status}`);
-        }
         const data = await response.json();
         setCategorias(data);
       } catch (err) {
@@ -63,11 +61,7 @@ export default function ModificarConsumible() {
     const fetchSubcategorias = async () => {
       try {
         const response = await fetch('http://localhost:5000/subcategorias');
-        if (!response.ok) {
-          throw new Error(`Error HTTP! Estado: ${response.status}`);
-        }
         const data = await response.json();
-        // Filtrar subcategorías basadas en la categoría seleccionada
         const filteredSubcategorias = data.filter(sub => sub.categoria_id === parseInt(selectedCategoria));
         setSubcategorias(filteredSubcategorias);
       } catch (err) {
@@ -78,34 +72,37 @@ export default function ModificarConsumible() {
     if (selectedCategoria) {
       fetchSubcategorias();
     } else {
-      setSubcategorias([]); // Limpiamos subcategorías si no hay categoría seleccionada
+      setSubcategorias([]); // Limpiar subcategorías si no hay categoría seleccionada
     }
   }, [selectedCategoria]);
+
+  // Manejar la selección de imagen
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImagen(e.target.files[0]);
+      setImagenPreview(URL.createObjectURL(e.target.files[0])); // Generar URL para la previsualización
+    }
+  };
+
+  // Abrir el selector de archivos
+  const openFileDialog = () => {
+    document.getElementById('imageInput').click();
+  };
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const consumibleData = {
-      nombre,
-      unidad,
-      cantidad,
-      subcategoria_id: selectedSubcategoria,
-      imagen: '' // Aquí podrías agregar lógica para manejar imágenes si es necesario
-    };
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('unidad', unidad);
+    formData.append('cantidad', cantidad);
+    formData.append('subcategoria_id', selectedSubcategoria);
+    if (imagen) formData.append('imagen', imagen);
 
     try {
-      const response = await fetch(`http://localhost:5000/consumible?id=${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(consumibleData),
+      await axios.put(`http://localhost:5000/consumible?id=${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
-
-      if (!response.ok) {
-        throw new Error(`Error HTTP! Estado: ${response.status}`);
-      }
-
       alert('Consumible modificado exitosamente');
     } catch (err) {
       console.error('Error al modificar el consumible:', err);
@@ -123,11 +120,22 @@ export default function ModificarConsumible() {
     <Container className="mt-4">
       <Row>
         <Col md={6}>
-          <Card className="bg-success" style={{ aspectRatio: '1 / 1' }}>
+          <Card className="bg-success" style={{ aspectRatio: '1 / 1' }} onClick={openFileDialog}>
             <Card.Body className="d-flex align-items-center justify-content-center">
-              <h2 className="text-white">EDITAR FOTO</h2>
+              {imagenPreview ? (
+                <img src={imagenPreview} alt="Previsualización" style={{ width: '100%', borderRadius: '8px' }} />
+              ) : (
+                <h2 className="text-white">EDITAR FOTO</h2>
+              )}
             </Card.Body>
           </Card>
+          <input
+            type="file"
+            id="imageInput"
+            style={{ display: 'none' }}
+            accept="image/*"
+            onChange={handleImageChange}
+          />
         </Col>
         <Col md={6}>
           <Card style={{ height: '80.5vh' }}>
@@ -144,11 +152,7 @@ export default function ModificarConsumible() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formCategory">
-                  <Form.Select
-                    value={selectedCategoria}
-                    onChange={handleCategoriaChange}
-                    required
-                  >
+                  <Form.Select value={selectedCategoria} onChange={handleCategoriaChange} required>
                     <option value="" disabled>Selecciona una nueva categoría</option>
                     {categorias.map(categoria => (
                       <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
@@ -160,7 +164,7 @@ export default function ModificarConsumible() {
                   <Form.Select
                     value={selectedSubcategoria}
                     onChange={(e) => setSelectedSubcategoria(e.target.value)}
-                    disabled={!selectedCategoria} // Deshabilitar si no hay categoría seleccionada
+                    disabled={!selectedCategoria}
                     required
                   >
                     <option value="" disabled>Selecciona una nueva subcategoría</option>
@@ -170,7 +174,7 @@ export default function ModificarConsumible() {
                   </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="mb-3 has-validation" controlId="formUnidad">
+                <Form.Group className="mb-3" controlId="formUnidad">
                   <Form.Control
                     type="text"
                     placeholder="[Agregar nueva unidad] (Obligatorio)"
@@ -179,7 +183,8 @@ export default function ModificarConsumible() {
                     required
                   />
                 </Form.Group>
-                <Form.Group className="mb-3 has-validation" controlId="formCantidad">
+
+                <Form.Group className="mb-3" controlId="formCantidad">
                   <Form.Control
                     type="text"
                     placeholder="[Agregar nueva cantidad] (Obligatorio)"
@@ -188,8 +193,9 @@ export default function ModificarConsumible() {
                     required
                   />
                 </Form.Group>
+
                 <div className='d-flex justify-content-end'>
-                  <Link to="/perfil_consumible"><Button variant="danger" className="me-2">Cancelar</Button></Link>
+                <Link to={`/perfil_consumible/${id}`}><Button variant="danger" className="me-2">Cancelar</Button></Link>
                   <Button variant="primary" type="submit">Modificar</Button>
                 </div>
               </Form>

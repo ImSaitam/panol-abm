@@ -12,22 +12,15 @@ export default function PerfilHerramienta() {
   useEffect(() => {
     const fetchHerramienta = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/herramienta?id=${id}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Datos obtenidos:', data);  // Depurando la respuesta
-
-        if (data.length > 0) {
-          setHerramienta(data[0]);  // Guardamos la primera herramienta si hay datos
+        const response = await axios.get(`http://localhost:5000/herramienta?id=${id}`);
+        if (response.data.length > 0) {
+          setHerramienta(response.data[0]);  // Guardamos la primera herramienta si hay datos
         } else {
           throw new Error('No se encontró ninguna herramienta con ese ID');
         }
       } catch (err) {
         console.error('Error al obtener la herramienta:', err);
-        setError(err.message);  // Guardamos el error en el estado
+        setError(err.message);
       }
     };
 
@@ -61,7 +54,15 @@ export default function PerfilHerramienta() {
             <Col md={6}>
               <Card className="bg-success" style={{ aspectRatio: '1 / 1' }}>
                 <Card.Body className="d-flex align-items-center justify-content-center">
-                  <img src={`http://localhost:5000/static/images/${herramienta.imagen}`} alt="Herramienta" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                  <img
+                    src={`http://localhost:5000/uploads/${herramienta.imagen}`} // Ruta actualizada
+                    alt="Herramienta"
+                    style={{ 
+                      maxWidth: '100%', // Asegura que la imagen no exceda el ancho del contenedor
+                      maxHeight: '100%', // Asegura que la imagen no exceda la altura del contenedor
+                      objectFit: 'contain' // Asegura que la imagen mantenga su proporción y no se recorte
+                    }}
+                  />
                 </Card.Body>
               </Card>
             </Col>
@@ -76,12 +77,12 @@ export default function PerfilHerramienta() {
                 </Card.Body>
               </Card>
               <div className='d-flex justify-content-end'>
-              <Link to={`/ver`}>
-              <Button variant="secondary" className="me-2">Volver</Button>
-              </Link>  
-              <Link to={`/modificar_herramienta/${herramienta.id}`}>
-              <Button variant="primary" className="me-2">Modificar</Button>
-              </Link>
+                <Link to={`/ver`}>
+                  <Button variant="secondary" className="me-2">Volver</Button>
+                </Link>  
+                <Link to={`/modificar_herramienta/${herramienta.id}`}>
+                  <Button variant="primary" className="me-2">Modificar</Button>
+                </Link>
                 <Button variant="danger" onClick={handleShow}>Dar de baja</Button>
               </div>
             </Col>

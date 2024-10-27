@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
@@ -11,22 +11,18 @@ export default function SubirHerramienta() {
     tipo_id: '',
     observaciones: ''
   });
-  const [showModal, setShowModal] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
   const [tipos, setTipos] = useState([]);
-  const [errors, setErrors] = useState({}); // Estado para errores
+  const [errors, setErrors] = useState({});
+  const fileInputRef = useRef(null);
 
   const handleImageChange = (event) => {
-    setFormData({ ...formData, image: event.target.files[0] });
+    setFormData({ ...formData, imagen: event.target.files[0] });
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-
-  const handleModalOpen = () => {
-    setShowModal(true);
+  const handleClick = () => {
+    fileInputRef.current.click();
   };
 
   useEffect(() => {
@@ -89,14 +85,15 @@ export default function SubirHerramienta() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append('observaciones', formData.observaciones);
+    data.append('tipo_id', formData.tipo_id);
+    data.append('imagen', formData.imagen);
 
     try {
-      delete formData.categoria_id;
-      delete formData.subcategoria_id;
-      delete formData.image;
-      const response = await axios.post('http://localhost:5000/herramienta', formData, {
+      const response = await axios.post('http://localhost:5000/herramienta', data, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         }
       });
 
@@ -107,7 +104,6 @@ export default function SubirHerramienta() {
     }
     catch (error) {
       console.error('Error al subir herramienta', error);
-      console.log(formData)
     }
   };
 
@@ -115,15 +111,35 @@ export default function SubirHerramienta() {
     <Container className="mt-4">
       <Row>
         <Col md={6}>
-          <Card className="bg-success pe-auto" role='button'  onClick={handleModalOpen} style={{ aspectRatio: '1 / 1' }}>
+          <Card 
+            className="bg-success pe-auto" 
+            role='button'  
+            onClick={handleClick} 
+            style={{ aspectRatio: '1 / 1', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+          >
             <Card.Body className="d-flex align-items-center justify-content-center">
-              {formData.image ? (
-                <img src={URL.createObjectURL(formData.image)} alt="Imagen seleccionada" />
+              {formData.imagen ? (
+                <img 
+                  src={URL.createObjectURL(formData.imagen)} 
+                  alt="Imagen seleccionada" 
+                  style={{ 
+                    width: '100%',   // Ajusta el ancho al 100% del contenedor
+                    height: '100%',  // Ajusta la altura al 100% del contenedor
+                    objectFit: 'cover' // Cubre todo el contenedor sin distorsionarse
+                  }} 
+                />
               ) : (
                 <h2 className="text-white">
                   AGREGAR FOTO
                 </h2>
               )}
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleImageChange} 
+                style={{ display: 'none' }} 
+                accept="image/*" 
+              />
             </Card.Body>
           </Card>
         </Col>
@@ -199,20 +215,6 @@ export default function SubirHerramienta() {
           </Card>
         </Col>
       </Row>
-
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Seleccionar imagen</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input type="file" />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleModalClose}>
-            Seleccionar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Container>
   );
 }

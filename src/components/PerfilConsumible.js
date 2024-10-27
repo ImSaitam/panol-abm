@@ -13,16 +13,12 @@ export default function PerfilConsumible() {
   useEffect(() => {
     const fetchConsumible = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/consumible?id=${id}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const response = await axios.get(`http://localhost:5000/consumible`, {
+          params: { id }
+        });
 
-        const data = await response.json();
-        console.log('Datos obtenidos:', data); // Depurando la respuesta
-
-        if (data.length > 0) {
-          setConsumible(data[0]); // Guardamos la primera herramienta si hay datos
+        if (response.data.length > 0) {
+          setConsumible(response.data[0]); // Guardamos el consumible si hay datos
         } else {
           throw new Error('No se encontró ningún consumible con ese ID');
         }
@@ -40,7 +36,7 @@ export default function PerfilConsumible() {
 
   const handleDeactivate = async () => {
     try {
-      await axios.delete(`http://localhost:5000/consumible?id=${id}`);
+      await axios.delete(`http://localhost:5000/consumible`, { params: { id } });
       alert('Consumible dado de baja.');
       window.location.href = "/ver";
       handleClose();
@@ -64,7 +60,7 @@ export default function PerfilConsumible() {
               <Card className="bg-success" style={{ aspectRatio: '1 / 1' }}>
                 <Card.Body className="d-flex align-items-center justify-content-center">
                   <img
-                    src={`http://localhost:5000/static/images/${consumible.imagen}`}
+                    src={`http://localhost:5000/uploads/${consumible.imagen}`}
                     alt="Consumible"
                     style={{ maxWidth: '100%', maxHeight: '100%' }}
                   />
@@ -82,9 +78,9 @@ export default function PerfilConsumible() {
                 </Card.Body>
               </Card>
               <div className='d-flex justify-content-end'>
-              <Link to={`/ver`}>
-              <Button variant="secondary" className="me-2">Volver</Button>
-              </Link>  
+                <Link to={`/ver`}>
+                  <Button variant="secondary" className="me-2">Volver</Button>
+                </Link>  
                 <Link to={`/modificar_consumible/${consumible.id}`}>
                   <Button variant="primary" className="me-2">Modificar</Button>
                 </Link>
