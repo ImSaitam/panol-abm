@@ -27,7 +27,13 @@ export default function Categorias() {
   const [subcategoriaToDelete, setSubCategoriaToDelete] = useState(null);
   const [tipoToDelete, setTipoToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editItem, setEditItem] = useState(null);
+  const [editItem, setEditItem] = useState({
+    id: null,
+    nombre: '',
+    type: '',
+    categoriaId: '',
+    subcategoriaId: ''
+  });
 
   const fetchCategorias = async () => {
     try {
@@ -119,7 +125,14 @@ export default function Categorias() {
   };
 
   const handleEditClick = (item, type) => {
-    setEditItem({ ...item, type });
+    const editItemData = {
+      ...item,
+      type,
+      categoriaId: item.categoria_id ? String(item.categoria_id) : '',
+      subcategoriaId: item.subcategoria_id ? String(item.subcategoria_id) : ''
+    };
+    console.log('EditItem:', editItemData);
+    setEditItem(editItemData);
     setShowEditModal(true);
   };
 
@@ -129,26 +142,27 @@ export default function Categorias() {
       try {
         let url;
         let data;
-
-        // Determina la URL y los datos según el tipo de elemento que se está editando
+  
         if (editItem.type === "categoria") {
           url = `http://localhost:5000/categoria?id=${editItem.id}`;
-          data = { nombre: editItem.nombre }; // Solo el nombre para categoría
+          data = { nombre: editItem.nombre };
         } else if (editItem.type === "subcategoria") {
           url = `http://localhost:5000/subcategoria?id=${editItem.id}`;
           data = {
             nombre: editItem.nombre,
             categoria_id: editItem.categoriaId,
-          }; // Incluye categoriaId
+          };
         } else if (editItem.type === "tipo") {
           url = `http://localhost:5000/tipo-herramienta?id=${editItem.id}`;
-          data = { nombre: editItem.nombre }; // Solo el nombre para tipo
+          data = {
+            nombre: editItem.nombre,
+            categoria_id: editItem.categoriaId,
+            subcategoria_id: editItem.subcategoriaId,
+          };
         }
-
-        // Realiza la solicitud PUT
+  
         await axios.put(url, data);
-
-        // Actualiza el estado local según el tipo de elemento
+  
         if (editItem.type === "categoria") {
           setCategorias(
             categorias.map((c) => (c.id === editItem.id ? editItem : c))
@@ -158,11 +172,25 @@ export default function Categorias() {
             subcategorias.map((s) => (s.id === editItem.id ? editItem : s))
           );
         } else if (editItem.type === "tipo") {
-          setTipos(tipos.map((t) => (t.id === editItem.id ? editItem : t)));
+          setTipos(tipos.map((t) => {
+            if (t.id === editItem.id) {
+              return {
+                ...t,
+                nombre: editItem.nombre,
+                categoria_id: editItem.categoriaId,
+                subcategoria_id: editItem.subcategoriaId,
+                cantidad: t.cantidad,
+                disponible: t.disponible
+              };
+            }
+            return t;
+          }));
         }
-
+  
         setShowEditModal(false);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error al actualizar:", error);
+      }
     }
   };
 
@@ -355,43 +383,93 @@ export default function Categorias() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={handleEditSubmit}>
-              <Form.Group controlId="nombre">
-                <Form.Label>Nombre:</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={editItem?.nombre}
-                  onChange={(event) =>
-                    setEditItem({ ...editItem, nombre: event.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group controlId="categoriaId">
-                <Form.Label>Categoría:</Form.Label>
-                <Form.Select
-                  value={editItem?.categoriaId}
-                  onChange={(event) =>
-                    setEditItem({
-                      ...editItem,
-                      categoriaId: event.target.value,
-                    })
-                  }
-                >
-                  <option value="" disabled selected>
-                    Selecciona una categoría
-                  </option>
-                  {categorias.map((categoria) => (
-                    <option key={categoria.id} value={categoria.id}>
-                      {categoria.nombre}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Guardar cambios
-              </Button>
-            </Form>
-          </Modal.Body>
+  <Form onSubmit={handleEditSubmit}>
+    <Form.Group controlId="nombre">
+      <Form.Label>Nombre:</Form.Label>
+      <Form.Control
+        type="text"
+        value={editItem?.nombre || ''}
+        onChange={(event) =>
+          setEditItem({ ...editItem, nombre: event.target.value })
+        }
+      />
+    </Form.Group>
+    
+    {editItem?.type === 'tipo' && (
+      <>
+        <Form.Group controlId="categoriaId" className="mt-3">
+          <Form.Label>Categoría:</Form.Label>
+          <Form.Select
+            value={editItem?.categoriaId || ''}
+            onChange={(event) => {
+              setEditItem({
+                ...editItem,
+                categoriaId: event.target.value,
+                subcategoriaId: '' // Reset subcategoria when categoria changes
+              });
+            }}
+          >
+            <option value="">Selecciona una categoría</option>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.id}>
+                {categoria.nombre}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group controlId="subcategoriaId" className="mt-3">
+          <Form.Label>Subcategoría:</Form.Label>
+          <Form.Select
+            value={editItem?.subcategoriaId || ''}
+            onChange={(event) =>
+              setEditItem({
+                ...editItem,
+                subcategoriaId: event.target.value,
+              })
+            }
+            disabled={!editItem?.categoriaId}
+          >
+            <option value="">Selecciona una subcategoría</option>
+            {subcategorias
+              .filter((sub) => String(sub.categoria_id) === String(editItem?.categoriaId))
+              .map((subcategoria) => (
+                <option key={subcategoria.id} value={subcategoria.id}>
+                  {subcategoria.nombre}
+                </option>
+              ))}
+          </Form.Select>
+        </Form.Group>
+      </>
+    )}
+
+    {editItem?.type === 'subcategoria' && (
+      <Form.Group controlId="categoriaId" className="mt-3">
+        <Form.Label>Categoría:</Form.Label>
+        <Form.Select
+          value={editItem?.categoriaId || ''}
+          onChange={(event) =>
+            setEditItem({
+              ...editItem,
+              categoriaId: event.target.value,
+            })
+          }
+        >
+          <option value="">Selecciona una categoría</option>
+          {categorias.map((categoria) => (
+            <option key={categoria.id} value={categoria.id}>
+              {categoria.nombre}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+    )}
+
+    <Button variant="primary" type="submit" className="mt-3">
+      Guardar cambios
+    </Button>
+  </Form>
+</Modal.Body>
         </Modal>
 
         <Modal
