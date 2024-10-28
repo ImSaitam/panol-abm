@@ -9,6 +9,7 @@ import Categorias from './components/Categorias';
 import SubirConsumibles from './components/SubirConsumibles';
 import PerfilConsumible from './components/PerfilConsumible';
 import ModificarConsumible from './components/ModificarConsumible';
+import PerfilHerramientaBaja from './components/PerfilHerrmientaBaja';
 
 export default function App() {
     return (
@@ -16,7 +17,8 @@ export default function App() {
             <Routes>
                 <Route path='/' element={<Inicio />} />
                 <Route path='/ver' element={<Vista/>} />
-                <Route path='/perfil_herramienta/:id' element={<PerfilHerramienta />} /> {/* Aquí agregamos el ID dinámico */}
+                <Route path='/perfil_herramienta/:id' element={<PerfilHerramienta />} />
+                <Route path='/perfil_herramienta_baja/:id' element={<PerfilHerramientaBaja />} />
                 <Route path='/modificar_herramienta/:id' element={<ModificarHerramientas />} />
                 <Route path='/subir_herramientas' element={<SubirHerramienta />} />
                 <Route path='/gestion_categorias' element={<Categorias />} />
