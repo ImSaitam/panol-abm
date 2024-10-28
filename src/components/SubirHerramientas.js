@@ -197,12 +197,12 @@ export default function SubirHerramienta() {
                 <Form.Group className="mb-3" controlId="formObservations">
                   <Form.Control 
                     as="textarea" 
-                    rows={3} 
+                    rows={4} 
                     name="observaciones"
                     placeholder="[Agregar observaciones] (Opcional)" 
                     value={formData.observaciones}
                     onChange={handleChange}
-                    required
+                    style={{ resize: 'none' }}
                   />
                 </Form.Group>
 

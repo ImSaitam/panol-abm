@@ -110,7 +110,7 @@ export default function ModificarHerramienta() {
         params: { id: id },
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      navigate(`/perfil_consumible/${id}`);
+
       if (response.status === 200) {
         alert('Herramienta modificada exitosamente');
         navigate(`/perfil_herramienta/${id}`);
@@ -214,13 +214,14 @@ export default function ModificarHerramienta() {
 
                 {/* Observaciones */}
                 <Form.Group className="mb-3" controlId="formObservations">
-                  <Form.Control 
+                <Form.Control 
                     as="textarea" 
-                    rows={3} 
-                    placeholder="Agregar observaciones (Opcional)" 
+                    rows={4} 
                     name="observaciones"
+                    placeholder="[Editar observaciones] (Opcional)" 
                     value={formData.observaciones}
                     onChange={handleChange}
+                    style={{ resize: 'none' }}
                   />
                 </Form.Group>
 
