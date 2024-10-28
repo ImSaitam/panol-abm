@@ -110,7 +110,7 @@ export default function ModificarHerramienta() {
         params: { id: id },
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-
+      navigate(`/perfil_consumible/${id}`);
       if (response.status === 200) {
         alert('Herramienta modificada exitosamente');
         navigate(`/perfil_herramienta/${id}`);
@@ -141,12 +141,12 @@ export default function ModificarHerramienta() {
     <Container className="mt-4">
       <Row>
         <Col md={6}>
-          <Card className="bg-success" style={{ aspectRatio: '1 / 1' }}>
+          <Card className="bg" style={{ aspectRatio: '1 / 1' }}>
             <Card.Body className="d-flex align-items-center justify-content-center" onClick={() => document.getElementById('fileInput').click()}>
               {imagePreview ? (
                 <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '100%' }} />
               ) : (
-                <h2 className="text-white">EDITAR FOTO</h2>
+                <h2 className="text-black">EDITAR FOTO</h2>
               )}
               <input
                 id="fileInput"

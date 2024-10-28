@@ -194,13 +194,13 @@ export default function Vista() {
       <Row>
         <Col>
           <Nav variant="tabs" className="w-100 d-flex">
-            <Nav.Item style={{ flex: '0 0 43%', marginRight: '6px' }}>
+            <Nav.Item style={{ flex: '0 0 43%', marginLeft: '0%', marginRight: '0.1%' }}>
               <Nav.Link eventKey="tools">Herramientas</Nav.Link>
             </Nav.Item>
-            <Nav.Item style={{ flex: '0 0 43%', marginRight: '6px' }}>
+            <Nav.Item style={{ flex: '0 0 43%', marginRight: '0.1%' }}>
               <Nav.Link eventKey="consumables">Consumibles</Nav.Link>
             </Nav.Item>
-            <Nav.Item style={{ flex: '0 0 13.3%' }}>
+            <Nav.Item style={{ flex: '0 0 13.3%', marginRight: '0%'  }}>
               <Nav.Link eventKey="bajas">Herramientas dadas de baja</Nav.Link>
             </Nav.Item>
           </Nav>

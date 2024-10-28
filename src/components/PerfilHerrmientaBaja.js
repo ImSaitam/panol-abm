@@ -37,18 +37,26 @@ export default function PerfilHerramientaBaja() {
         <>
           <Row>
             <Col md={6}>
-              <Card className="bg-success" style={{ aspectRatio: '1 / 1' }}>
-                <Card.Body className="d-flex align-items-center justify-content-center">
-                  <img
+            <Card style={{ aspectRatio: '1 / 1' , border: 'none'}}>
+              <Card.Body 
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                  width: '100%',  // Ancho en porcentaje
+                  height: '100%', // Alto en porcentaje
+                }}
+              >
+                <img
                     src={`http://localhost:5000/uploads/${herramienta.imagen}`}
-                    alt="Herramienta"
-                    style={{ 
-                      maxWidth: '100%',
-                      maxHeight: '100%', 
-                      objectFit: 'contain'
-                    }}
-                  />
-                </Card.Body>
+                  alt="Herramienta"
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '100%', 
+                    minWidth: '50%',    // Tamaño mínimo para agrandar imágenes pequeñas
+                    minHeight: '50%',   // Tamaño mínimo para agrandar imágenes pequeñas
+                    objectFit: 'contain'
+                  }}
+                />
+              </Card.Body>
               </Card>
             </Col>
             <Col md={6}>

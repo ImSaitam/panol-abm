@@ -52,19 +52,28 @@ export default function PerfilHerramienta() {
         <>
           <Row>
             <Col md={6}>
-              <Card className="bg-success" style={{ aspectRatio: '1 / 1' }}>
-                <Card.Body className="d-flex align-items-center justify-content-center">
-                  <img
-                    src={`http://localhost:5000/uploads/${herramienta.imagen}`} // Ruta actualizada
-                    alt="Herramienta"
-                    style={{ 
-                      maxWidth: '100%', // Asegura que la imagen no exceda el ancho del contenedor
-                      maxHeight: '100%', // Asegura que la imagen no exceda la altura del contenedor
-                      objectFit: 'contain' // Asegura que la imagen mantenga su proporción y no se recorte
-                    }}
-                  />
-                </Card.Body>
-              </Card>
+            <Card style={{ aspectRatio: '1 / 1', border: 'none' }}> 
+              <Card.Body 
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                  width: '100%',  
+                  height: '100%', 
+                  backgroundColor: 'transparent'
+                }}
+              >
+                <img
+                  src={`http://localhost:5000/uploads/${herramienta.imagen}`}
+                  alt="Herramienta"
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '100%', 
+                    minWidth: '50%',    // Tamaño mínimo para agrandar imágenes pequeñas
+                    minHeight: '50%',   // Tamaño mínimo para agrandar imágenes pequeñas
+                    objectFit: 'contain'
+                  }}
+                />
+              </Card.Body>
+            </Card>
             </Col>
             <Col md={6}>
               <Card style={{ height: '80.5vh'}}>

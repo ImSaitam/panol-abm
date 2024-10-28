@@ -101,7 +101,7 @@ export default function SubirConsumibles() {
       <Row>
         <Col md={6}>
           <Card
-            className="bg-success"
+            className="bg"
             style={{ aspectRatio: '1 / 1', position: 'relative', overflow: 'hidden' }} // Para mantener el contenedor
             onClick={() => document.getElementById('fileInput').click()}
           >
@@ -112,12 +112,12 @@ export default function SubirConsumibles() {
                 style={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'contain', // Ajusta la imagen para que encaje
+                  objectFit: 'contain' 
                 }}
               />
             ) : (
               <Card.Body className="d-flex align-items-center justify-content-center">
-                <h2 className="text-white">AGREGAR FOTO</h2>
+                <h2 className="text-black">AGREGAR FOTO</h2>
               </Card.Body>
             )}
           </Card>

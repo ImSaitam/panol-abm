@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ModificarConsumible() {
   const { id } = useParams(); // Extraemos el ID de la URL
+  const navigate = useNavigate(); // Hook para la navegación
   const [consumible, setConsumible] = useState(null);
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
@@ -103,7 +104,7 @@ export default function ModificarConsumible() {
       await axios.put(`http://localhost:5000/consumible?id=${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      alert('Consumible modificado exitosamente');
+      navigate(`/perfil_consumible/${id}`); // Redirigir tras la modificación exitosa
     } catch (err) {
       console.error('Error al modificar el consumible:', err);
     }
@@ -120,12 +121,12 @@ export default function ModificarConsumible() {
     <Container className="mt-4">
       <Row>
         <Col md={6}>
-          <Card className="bg-success" style={{ aspectRatio: '1 / 1' }} onClick={openFileDialog}>
+          <Card className="bg" style={{ aspectRatio: '1 / 1' }} onClick={openFileDialog}>
             <Card.Body className="d-flex align-items-center justify-content-center">
               {imagenPreview ? (
                 <img src={imagenPreview} alt="Previsualización" style={{ width: '100%', borderRadius: '8px' }} />
               ) : (
-                <h2 className="text-white">EDITAR FOTO</h2>
+                <h2 className="text-black">EDITAR FOTO</h2>
               )}
             </Card.Body>
           </Card>
@@ -195,7 +196,7 @@ export default function ModificarConsumible() {
                 </Form.Group>
 
                 <div className='d-flex justify-content-end'>
-                <Link to={`/perfil_consumible/${id}`}><Button variant="danger" className="me-2">Cancelar</Button></Link>
+                  <Link to={`/perfil_consumible/${id}`}><Button variant="danger" className="me-2">Cancelar</Button></Link>
                   <Button variant="primary" type="submit">Modificar</Button>
                 </div>
               </Form>

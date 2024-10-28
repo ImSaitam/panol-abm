@@ -112,10 +112,10 @@ export default function SubirHerramienta() {
       <Row>
         <Col md={6}>
           <Card 
-            className="bg-success pe-auto" 
+            className="bg" 
             role='button'  
             onClick={handleClick} 
-            style={{ aspectRatio: '1 / 1', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+            style={{ aspectRatio: '1 / 1', position: 'relative', overflow: 'hidden' }} 
           >
             <Card.Body className="d-flex align-items-center justify-content-center">
               {formData.imagen ? (
@@ -125,11 +125,11 @@ export default function SubirHerramienta() {
                   style={{ 
                     width: '100%',   // Ajusta el ancho al 100% del contenedor
                     height: '100%',  // Ajusta la altura al 100% del contenedor
-                    objectFit: 'cover' // Cubre todo el contenedor sin distorsionarse
+                    objectFit: 'contain' // Cubre todo el contenedor sin distorsionarse
                   }} 
                 />
               ) : (
-                <h2 className="text-white">
+                <h2 className="text-black">
                   AGREGAR FOTO
                 </h2>
               )}
