@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button} from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { config } from './config';
 
 export default function PerfilHerramientaBaja() {
   const { id } = useParams();  
@@ -11,7 +12,7 @@ export default function PerfilHerramientaBaja() {
   useEffect(() => {
     const fetchHerramienta = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/herramienta-baja?id=${id}`);
+        const response = await axios.get(`${config}}/herramienta-baja?id=${id}`);
         if (response.data.length > 0) {
           setHerramienta(response.data[0]); 
         } else {
@@ -46,7 +47,7 @@ export default function PerfilHerramientaBaja() {
                 }}
               >
                 <img
-                    src={`http://localhost:5000/uploads/${herramienta.imagen}`}
+                    src={`${config}}/uploads/${herramienta.imagen}`}
                   alt="Herramienta"
                   style={{ 
                     maxWidth: '100%', 

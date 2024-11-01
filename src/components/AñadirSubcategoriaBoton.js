@@ -3,6 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../añadircategoriaboton.css";
 import axios from "axios";
+import { config } from "./config";
 
 export default function AñadirSubCategoriaBoton() {
   const [show, setShow] = useState(false);
@@ -19,7 +20,7 @@ export default function AñadirSubCategoriaBoton() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/subcategoria",
+        `${config}/subcategoria`,
         { ...formData, categoria_id: selectedCategoryId },
         {
           "Content-Type": "application/json",
@@ -32,7 +33,7 @@ export default function AñadirSubCategoriaBoton() {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/categorias");
+        const response = await axios.get(`${config}/categorias`);
         setCategorias(response.data);
       } catch (error) {
       }

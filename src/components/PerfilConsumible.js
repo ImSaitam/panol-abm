@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { config } from './config';
 
 export default function PerfilConsumible() {
   const { id } = useParams(); // Extraemos el ID de la URL
@@ -13,7 +14,7 @@ export default function PerfilConsumible() {
   useEffect(() => {
     const fetchConsumible = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/consumible`, {
+        const response = await axios.get(`${config}/consumible`, {
           params: { id }
         });
 
@@ -36,7 +37,7 @@ export default function PerfilConsumible() {
 
   const handleDeactivate = async () => {
     try {
-      await axios.delete(`http://localhost:5000/consumible`, { params: { id } });
+      await axios.delete(`${config}/consumible`, { params: { id } });
       alert('Consumible dado de baja.');
       window.location.href = "/ver";
       handleClose();
@@ -66,7 +67,7 @@ export default function PerfilConsumible() {
                 }}
               >
                 <img
-                    src={`http://localhost:5000/uploads/${consumible.imagen}`}
+                    src={`${config}/uploads/${consumible.imagen}`}
                   alt="Herramienta"
                   style={{ 
                     maxWidth: '100%', 

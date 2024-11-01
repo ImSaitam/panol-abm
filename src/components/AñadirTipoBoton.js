@@ -3,6 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../añadircategoriaboton.css";
 import axios from "axios";
+import { config } from "./config";
 
 export default function AñadirTipoBoton() {
   const [show, setShow] = useState(false);
@@ -18,7 +19,7 @@ export default function AñadirTipoBoton() {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/categorias");
+        const response = await axios.get(`${config}/categorias`);
         setCategorias(response.data);
       } catch (error) {
       }
@@ -32,7 +33,7 @@ export default function AñadirTipoBoton() {
       if (selectedCategoryId) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/subcategorias`
+            `${config}/subcategorias`
           );
           setSubcategorias(response.data);
           setFilteredSubcategorias(
@@ -56,7 +57,7 @@ export default function AñadirTipoBoton() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/tipo-herramienta",
+        `${config}/tipo-herramienta`,
         {
           ...formData,
           categoria_id: selectedCategoryId,

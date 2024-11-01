@@ -14,6 +14,7 @@ import AñadirCategoriaBoton from "./AñadirCategoriaBoton";
 import AñadirSubCategoriaBoton from "./AñadirSubcategoriaBoton";
 import AñadirTipoBoton from "./AñadirTipoBoton";
 import axios from "axios";
+import { config } from "./config";
 
 export default function Categorias() {
   const [categorias, setCategorias] = useState([]);
@@ -37,7 +38,7 @@ export default function Categorias() {
 
   const fetchCategorias = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/categorias");
+      const response = await axios.get(`${config}/categorias`);
       setCategorias(response.data);
     } catch (error) {}
   };
@@ -48,7 +49,7 @@ export default function Categorias() {
 
   const fetchSubcategorias = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/subcategorias");
+      const response = await axios.get(`${config}/subcategorias`);
       setSubcategorias(response.data);
     } catch (error) {}
   };
@@ -60,7 +61,7 @@ export default function Categorias() {
   const fetchTipos = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/tipos-herramienta"
+        `${config}/tipos-herramienta`
       );
       setTipos(response.data);
     } catch (error) {}
@@ -90,7 +91,7 @@ export default function Categorias() {
     if (categoriaToDelete) {
       try {
         await axios.delete(
-          `http://localhost:5000/categoria?id=${categoriaToDelete.id}`
+          `${config}/categoria?id=${categoriaToDelete.id}`
         );
         setCategorias(categorias.filter((c) => c.id !== categoriaToDelete.id));
         setShowCategoriaModal(false);
@@ -102,7 +103,7 @@ export default function Categorias() {
     if (subcategoriaToDelete) {
       try {
         await axios.delete(
-          `http://localhost:5000/subcategoria?id=${subcategoriaToDelete.id}`
+          `${config}/subcategoria?id=${subcategoriaToDelete.id}`
         );
         setSubcategorias(
           subcategorias.filter((c) => c.id !== subcategoriaToDelete.id)
@@ -116,7 +117,7 @@ export default function Categorias() {
     if (tipoToDelete) {
       try {
         await axios.delete(
-          `http://localhost:5000/tipo-herramienta?id=${tipoToDelete.id}`
+          `${config}/tipo-herramienta?id=${tipoToDelete.id}`
         );
         setTipos(tipos.filter((c) => c.id !== tipoToDelete.id));
         setShowTipoModal(false);
@@ -144,16 +145,16 @@ export default function Categorias() {
         let data;
 
         if (editItem.type === "categoria") {
-          url = `http://localhost:5000/categoria?id=${editItem.id}`;
+          url = `${config}/categoria?id=${editItem.id}`;
           data = { nombre: editItem.nombre };
         } else if (editItem.type === "subcategoria") {
-          url = `http://localhost:5000/subcategoria?id=${editItem.id}`;
+          url = `${config}/subcategoria?id=${editItem.id}`;
           data = {
             nombre: editItem.nombre,
             categoria_id: editItem.categoriaId,
           };
         } else if (editItem.type === "tipo") {
-          url = `http://localhost:5000/tipo-herramienta?id=${editItem.id}`;
+          url = `${config}/tipo-herramienta?id=${editItem.id}`;
           data = {
             nombre: editItem.nombre,
             categoria_id: editItem.categoriaId,

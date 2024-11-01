@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { config } from './config';
 
 export default function SubirConsumibles() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function SubirConsumibles() {
 
   useEffect(() => {
     const fetchCategorias = async () => {
-      const response = await fetch('http://localhost:5000/categorias');
+      const response = await fetch(`${config}/categorias`);
       const data = await response.json();
       setCategorias(data);
     };
@@ -27,7 +28,7 @@ export default function SubirConsumibles() {
   }, []);
 
   const fetchSubcategorias = async (categoriaId) => {
-    const response = await fetch(`http://localhost:5000/subcategorias`);
+    const response = await fetch(`${config}/subcategorias`);
     const data = await response.json();
     const filteredSubcategorias = data.filter(sub => sub.categoria_id === parseInt(categoriaId));
     setSubcategorias(filteredSubcategorias);
@@ -81,7 +82,7 @@ export default function SubirConsumibles() {
     if (formData.imagen) data.append("imagen", formData.imagen);
 
     try {
-      const response = await axios.post('http://localhost:5000/consumible', data, {
+      const response = await axios.post(`${config}/consumible`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         }

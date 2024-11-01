@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { config } from './config';
 
 export default function ModificarHerramienta() {
   const { id } = useParams();
@@ -22,7 +23,7 @@ export default function ModificarHerramienta() {
 
   useEffect(() => {
     const fetchHerramienta = async () => {
-      const response = await axios.get(`http://localhost:5000/herramienta?id=${id}`);
+      const response = await axios.get(`${config}/herramienta?id=${id}`);
       const data = response.data[0];
       setFormData({
         observaciones: data.observaciones,
@@ -39,19 +40,19 @@ export default function ModificarHerramienta() {
 
   useEffect(() => {
     const fetchCategorias = async () => {
-      const response = await axios.get('http://localhost:5000/categorias');
+      const response = await axios.get(`${config}/categorias`);
       setCategorias(response.data);
     };
     fetchCategorias();
   }, []);
 
   const fetchSubcategorias = async (categoriaId) => {
-    const response = await axios.get('http://localhost:5000/subcategorias');
+    const response = await axios.get(`${config}/subcategorias`);
     setSubcategorias(response.data.filter(sub => sub.categoria_id === parseInt(categoriaId)));
   };
 
   const fetchTipos = async (subcategoriaId) => {
-    const response = await axios.get('http://localhost:5000/tipos-herramienta');
+    const response = await axios.get(`${config}/tipos-herramienta`);
     setTipos(response.data.filter(tipo => tipo.subcategoria_id === parseInt(subcategoriaId)));
   };
 
@@ -106,7 +107,7 @@ export default function ModificarHerramienta() {
     if (selectedImage) formDataToSend.append("imagen", selectedImage); // Agregar la imagen solo si se selecciona
 
     try {
-      const response = await axios.put(`http://localhost:5000/herramienta`, formDataToSend, {
+      const response = await axios.put(`${config}/herramienta`, formDataToSend, {
         params: { id: id },
         headers: { 'Content-Type': 'multipart/form-data' }
       });

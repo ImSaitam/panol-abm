@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { config } from './config';
 
 export default function ModificarConsumible() {
   const { id } = useParams(); // Extraemos el ID de la URL
@@ -21,7 +22,7 @@ export default function ModificarConsumible() {
   useEffect(() => {
     const fetchConsumible = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/consumible?id=${id}`);
+        const response = await fetch(`${config}/consumible?id=${id}`);
         const data = await response.json();
         if (data.length > 0) {
           const consumibleData = data[0];
@@ -46,7 +47,7 @@ export default function ModificarConsumible() {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch('http://localhost:5000/categorias');
+        const response = await fetch(`${config}/categorias`);
         const data = await response.json();
         setCategorias(data);
       } catch (err) {
@@ -61,7 +62,7 @@ export default function ModificarConsumible() {
   useEffect(() => {
     const fetchSubcategorias = async () => {
       try {
-        const response = await fetch('http://localhost:5000/subcategorias');
+        const response = await fetch(`${config}/subcategorias`);
         const data = await response.json();
         const filteredSubcategorias = data.filter(sub => sub.categoria_id === parseInt(selectedCategoria));
         setSubcategorias(filteredSubcategorias);
@@ -101,7 +102,7 @@ export default function ModificarConsumible() {
     if (imagen) formData.append('imagen', imagen);
 
     try {
-      await axios.put(`http://localhost:5000/consumible?id=${id}`, formData, {
+      await axios.put(`${config}/consumible?id=${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       navigate(`/perfil_consumible/${id}`); // Redirigir tras la modificación exitosa

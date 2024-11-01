@@ -12,8 +12,7 @@ import {
 import "../views.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-const API_URL = "http://localhost:5000";
+import { config } from "./config";
 
 export default function Vista() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
@@ -33,7 +32,7 @@ export default function Vista() {
   // Cargar categorías desde el endpoint
   useEffect(() => {
     axios
-      .get(`${API_URL}/categorias`)
+      .get(`${config}/categorias`)
       .then((response) => {
         setCategorias(response.data);
       })
@@ -45,7 +44,7 @@ export default function Vista() {
   // Cargar herramientas desde el endpoint
   useEffect(() => {
     axios
-      .get(`${API_URL}/herramientas`)
+      .get(`${config}/herramientas`)
       .then((response) => {
         setHerramientas(response.data);
       })
@@ -57,7 +56,7 @@ export default function Vista() {
   // Cargar consumibles desde el endpoint
   useEffect(() => {
     axios
-      .get(`${API_URL}/consumibles`)
+      .get(`${config}/consumibles`)
       .then((response) => {
         setConsumibles(response.data);
       })
@@ -69,7 +68,7 @@ export default function Vista() {
   // Cargar herramientas dadas de baja desde el endpoint
   useEffect(() => {
     axios
-      .get(`${API_URL}/herramientas-bajas`)
+      .get(`${config}/herramientas-bajas`)
       .then((response) => {
         setHerramientasBajas(response.data);
       })
@@ -82,7 +81,7 @@ export default function Vista() {
   useEffect(() => {
     if (categoriaSeleccionada) {
       axios
-        .get(`${API_URL}/subcategorias`)
+        .get(`${config}/subcategorias`)
         .then((response) => {
           const filteredSubcategorias = response.data.filter(
             (sub) => sub.categoria_id === parseInt(categoriaSeleccionada)
@@ -103,7 +102,7 @@ export default function Vista() {
   useEffect(() => {
     if (subcategoriaSeleccionada) {
       axios
-        .get(`${API_URL}/tipos-herramienta`)
+        .get(`${config}/tipos-herramienta`)
         .then((response) => {
           const filteredTipos = response.data.filter(
             (tipo) =>
@@ -124,7 +123,7 @@ export default function Vista() {
   useEffect(() => {
     if (subcategoriaSeleccionada) {
       axios
-        .get(`${API_URL}/tipos-herramienta`)
+        .get(`${config}/tipos-herramienta`)
         .then((response) => {
           const filteredTiposBajas = response.data.filter(
             (tipo) => tipo.subcategoria_id === parseInt(subcategoriaSeleccionada)

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { config } from './config';
 
 export default function SubirHerramienta() {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ export default function SubirHerramienta() {
 
   useEffect(() => {
     const fetchCategorias = async () => {
-      const response = await fetch('http://localhost:5000/categorias');
+      const response = await fetch(`${config}/categorias`);
       const data = await response.json();
       setCategorias(data);
     };
@@ -35,14 +36,14 @@ export default function SubirHerramienta() {
   }, []);
 
   const fetchSubcategorias = async (categoriaId) => {
-    const response = await fetch(`http://localhost:5000/subcategorias`);
+    const response = await fetch(`${config}/subcategorias`);
     const data = await response.json();
     const filteredSubcategorias = data.filter(sub => sub.categoria_id === parseInt(categoriaId));
     setSubcategorias(filteredSubcategorias);
   };
 
   const fetchTipos = async (subcategoriaId) => {
-    const response = await fetch('http://localhost:5000/tipos-herramienta');
+    const response = await fetch(`${config}/tipos-herramienta`);
     const data = await response.json();
     const filteredTipos = data.filter(tipo => tipo.subcategoria_id === parseInt(subcategoriaId));
     setTipos(filteredTipos);
@@ -91,7 +92,7 @@ export default function SubirHerramienta() {
     data.append('imagen', formData.imagen);
 
     try {
-      const response = await axios.post('http://localhost:5000/herramienta', data, {
+      const response = await axios.post(`${config}/herramienta`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         }

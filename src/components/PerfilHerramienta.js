@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { config } from './config';
 
 export default function PerfilHerramienta() {
   const { id } = useParams();  
@@ -12,7 +13,7 @@ export default function PerfilHerramienta() {
   useEffect(() => {
     const fetchHerramienta = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/herramienta?id=${id}`);
+        const response = await axios.get(`${config}/herramienta?id=${id}`);
         if (response.data.length > 0) {
           setHerramienta(response.data[0]);  // Guardamos la primera herramienta si hay datos
         } else {
@@ -32,7 +33,7 @@ export default function PerfilHerramienta() {
 
   const handleDeactivate = async () => {
     try {
-      await axios.delete(`http://localhost:5000/herramienta?id=${id}`);
+      await axios.delete(`${config}/herramienta?id=${id}`);
       alert('Herramienta dado de baja.');
       window.location.href = "/ver";
       handleClose();
@@ -62,7 +63,7 @@ export default function PerfilHerramienta() {
                 }}
               >
                 <img
-                  src={`http://localhost:5000/uploads/${herramienta.imagen}`}
+                  src={`${config}/uploads/${herramienta.imagen}`}
                   alt="Herramienta"
                   style={{ 
                     maxWidth: '100%', 

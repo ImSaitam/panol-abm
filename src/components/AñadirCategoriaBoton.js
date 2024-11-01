@@ -3,6 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../añadircategoriaboton.css";
 import axios from "axios";
+import config from './config';
 
 export default function AñadirCategoriaBoton() {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ export default function AñadirCategoriaBoton() {
     event.preventDefault();
   
     try {
-      const response = await axios.post("http://localhost:5000/categoria", formData, {
+      const response = await axios.post(`${config}/categoria`, formData, {
         'Content-Type': 'application/json'
       }
       );
