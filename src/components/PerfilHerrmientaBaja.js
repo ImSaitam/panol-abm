@@ -12,7 +12,7 @@ export default function PerfilHerramientaBaja() {
   useEffect(() => {
     const fetchHerramienta = async () => {
       try {
-        const response = await axios.get(`${config}}/herramienta-baja?id=${id}`);
+        const response = await axios.get(`${config}/herramienta-baja?id=${id}`);
         if (response.data.length > 0) {
           setHerramienta(response.data[0]); 
         } else {
