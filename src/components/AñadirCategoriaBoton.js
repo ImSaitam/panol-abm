@@ -3,7 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../añadircategoriaboton.css";
 import axios from "axios";
-import config from './config';
+import {config} from './config';
 
 export default function AñadirCategoriaBoton() {
   const [formData, setFormData] = useState({
