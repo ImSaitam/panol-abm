@@ -82,7 +82,7 @@ export default function PerfilHerramienta() {
                   <p><strong>Categoría:</strong> {herramienta.categoria_nombre}</p>
                   <p><strong>Subcategoría:</strong> {herramienta.subcategoria_nombre}</p>
                   <p><strong>Tipo:</strong> {herramienta.tipo_nombre}</p>
-                  <p><strong>Observaciones:</strong> {herramienta.observaciones}</p>
+                  <p><strong>Observaciones:</strong> {herramienta.observaciones === "null" ? <em>[No hay observaciones]</em> : herramienta.observaciones}</p>
                 </Card.Body>
               </Card>
               <div className='d-flex justify-content-end'>

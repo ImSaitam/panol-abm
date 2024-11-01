@@ -9,7 +9,7 @@ export default function SubirHerramienta() {
     categoria_id: '',
     subcategoria_id: '',
     tipo_id: '',
-    observaciones: ''
+    observaciones: null
   });
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);

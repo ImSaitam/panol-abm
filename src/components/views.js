@@ -194,25 +194,14 @@ export default function Vista() {
       <Row>
         <Col>
           <Nav variant="tabs" className="w-100 d-flex">
-            <Nav.Item style={{ flex: '0 0 43%', marginLeft: '0%', marginRight: '0.1%' }}>
-              <Nav.Link eventKey="tools">    
-                <div className="scrolling-tab">
-                  <span>Herramientas</span>
-                </div></Nav.Link>
+            <Nav.Item style={{ flex: '0 0 33%', marginLeft: '0%', marginRight: '0.5%' }}>
+              <Nav.Link eventKey="tools">Herramientas</Nav.Link>
             </Nav.Item>
-            <Nav.Item style={{ flex: '0 0 43%', marginRight: '0.1%' }}>
-              <Nav.Link eventKey="consumables">
-              <div className="scrolling-tab">
-                <span>Consumibles</span>
-              </div>
-              </Nav.Link>
+            <Nav.Item style={{ flex: '0 0 33%', marginRight: '0.5%' }}>
+              <Nav.Link eventKey="consumables">Consumibles</Nav.Link>
             </Nav.Item>
-            <Nav.Item style={{ flex: '0 0 13.3%', marginRight: '0%'  }}>
-              <Nav.Link eventKey="bajas">
-              <div className="scrolling-tab">
-                <span>Herramientas dadas de baja</span>
-              </div>
-              </Nav.Link>
+            <Nav.Item style={{ flex: '0 0 33%', marginRight: '0%'  }}>
+              <Nav.Link eventKey="bajas">Herramientas dadas de baja</Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
