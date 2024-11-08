@@ -29,12 +29,12 @@ export default function Inicio() {
                        
                         <Accordion.Header>Gestionar</Accordion.Header>
 
-                        <Link to="/ver" className = "text-decoration-none">
+                        <Link to="/abm/ver" className = "text-decoration-none">
                         <Accordion.Body>
                         Gestionar herramientas y consumibles
                         </Accordion.Body>
                         </Link>
-                        <Link to="/gestion_categorias" className = "text-decoration-none">
+                        <Link to="/abm/gestion_categorias" className = "text-decoration-none">
                         <Accordion.Body>
                         Gestionar categoría, subcategoría y tipo
                         </Accordion.Body>
@@ -51,12 +51,12 @@ export default function Inicio() {
                     <Accordion.Item eventKey="1">
 
                         <Accordion.Header>Agregar </Accordion.Header>
-                        <Link to ="/subir_herramientas" className = "text-decoration-none">
+                        <Link to ="/abm/subir_herramientas" className = "text-decoration-none">
                         <Accordion.Body>
                            Agregar herramientas
                         </Accordion.Body>
                         </Link>
-                        <Link to ="/subir_consumibles" className = "text-decoration-none">
+                        <Link to ="/abm/subir_consumibles" className = "text-decoration-none">
                         <Accordion.Body>
                            Agregar consumibles
                         </Accordion.Body>
