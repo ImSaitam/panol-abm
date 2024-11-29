@@ -47,7 +47,7 @@ export default function PerfilHerramientaBaja() {
                 }}
               >
                 <img
-                    src={`${config}}/uploads/${herramienta.imagen}`}
+                    src={`${config}/uploads/${herramienta.imagen}`}
                   alt="Herramienta"
                   style={{ 
                     maxWidth: '100%', 
